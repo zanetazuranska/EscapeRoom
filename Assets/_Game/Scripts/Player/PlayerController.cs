@@ -52,10 +52,15 @@ public class PlayerController : MonoBehaviour
         _playerInput.Movement.WalkUD.canceled += _ => _isWalkingUD = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         CalculateState();
+        CalculateGravity();
+        Move();
+    }
 
+    private void CalculateGravity()
+    {
         if (GroundCheck() && _velocity.y < 0)
         {
             _velocity.y = -2f;
@@ -63,8 +68,6 @@ public class PlayerController : MonoBehaviour
 
         _velocity.y += _gravity * Time.deltaTime;
         _characterController.Move(_velocity * Time.deltaTime);
-
-        Move();
     }
 
     private void Move()

@@ -1,33 +1,26 @@
-
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.XR.Haptics;
+using UnityEngine.Events;
 
 namespace ER
 {
     public class StateMachine
     {
-        public enum GameStates
-        {
-            InitializeState = 0,
-            MainMenuState = 1,
-            MatchmakingState = 2,
-            GameState = 3,
-        }
-        private GameStates _currentGameStates;
+        public UnityEvent OnStateChange;
+
+        private ApplicationFlowController.GameStates _currentGameStates;
+        private ApplicationFlowController.GameStates _previousGameState;
+        private ApplicationFlowController.GameStates _nextGameStates;
 
         private BaseState _currentState;
-        public InitializeState _initializeState = new InitializeState((int)GameStates.InitializeState);
-        public MainMenuState _mainMenuState = new MainMenuState((int)GameStates.MainMenuState);
-        public MatchmakingState _matchmakingState = new MatchmakingState((int)GameStates.MatchmakingState);
-        public GameState _gameState = new GameState((int)GameStates.GameState);
 
-
-        public void Start()
+        public void Start(BaseState _currentGameState)
         {
-            _currentState = _initializeState;
-            _initializeState.Context = this;
-            _initializeState.EnterState(this);
-            _currentGameStates = (GameStates)_currentState.GetStateId();
+            if (OnStateChange == null)
+                OnStateChange = new UnityEvent();
+
+            _currentState = _currentGameState;
+            _currentGameState.Context = this;
+            _currentGameState.EnterState(this);
+            _currentGameStates = (ApplicationFlowController.GameStates)_currentState.GetStateId();
         }
 
         public void Update()
@@ -35,20 +28,35 @@ namespace ER
             _currentState.UpdateState(this);
         }
 
-        public void ChangeState(BaseState state)
+        public void ChangeState(BaseState state, ApplicationFlowController.GameStates nextState)
         {
             _currentState.ExitState(this);
+
+            OnStateChange.Invoke();
+
+            _previousGameState = (ApplicationFlowController.GameStates)_currentState.GetStateId();
+            _nextGameStates = nextState;
 
             _currentState = state;
             _currentState.Context = this;
             state.EnterState(this);
 
-            _currentGameStates = (GameStates)_currentState.GetStateId();
+            _currentGameStates = (ApplicationFlowController.GameStates)_currentState.GetStateId();
         }
 
-        public GameStates GetCurrentGameState()
+        public ApplicationFlowController.GameStates GetCurrentGameState()
         {
             return _currentGameStates;
+        }
+
+        public ApplicationFlowController.GameStates GetPreviousGameState()
+        {
+            return _previousGameState;
+        }
+
+        public ApplicationFlowController.GameStates GetNextGameState()
+        {
+            return _nextGameStates;
         }
 
     }
