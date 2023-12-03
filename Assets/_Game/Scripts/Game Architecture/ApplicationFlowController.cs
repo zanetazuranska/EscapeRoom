@@ -26,17 +26,18 @@ namespace ER
 
         private void Update()
         {
+            //Scene Manager Test
             if(Input.GetKeyUp(KeyCode.Escape))
             {
-                _stateMachine.ChangeState(_mainMenuState, GameStates.GameState);
+                GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.MENU, true);
+            }
+
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.GameScene, true);
             }
 
             _stateMachine.Update();
-        }
-
-        private void Changed()
-        {
-            Debug.Log("Chamge");
         }
     }
 }
