@@ -4,7 +4,7 @@ namespace ER
 {
     public class StateMachine
     {
-        public UnityEvent OnStateChange;
+        public UnityEvent OnStateChange = new UnityEvent();
 
         private ApplicationFlowController.GameStates _currentGameStates;
         private ApplicationFlowController.GameStates _previousGameState;

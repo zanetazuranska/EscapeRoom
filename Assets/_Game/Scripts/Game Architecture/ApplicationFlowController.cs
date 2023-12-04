@@ -14,10 +14,10 @@ namespace ER
             GameState = 3,
         }
 
-        public InitializeState _initializeState = new InitializeState((int)GameStates.InitializeState);
-        public MainMenuState _mainMenuState = new MainMenuState((int)GameStates.MainMenuState);
-        public MatchmakingState _matchmakingState = new MatchmakingState((int)GameStates.MatchmakingState);
-        public GameState _gameState = new GameState((int)GameStates.GameState);
+        private InitializeState _initializeState = new InitializeState((int)GameStates.InitializeState);
+        private MainMenuState _mainMenuState = new MainMenuState((int)GameStates.MainMenuState);
+        private MatchmakingState _matchmakingState = new MatchmakingState((int)GameStates.MatchmakingState);
+        private GameState _gameState = new GameState((int)GameStates.GameState);
 
         private void Start()
         {

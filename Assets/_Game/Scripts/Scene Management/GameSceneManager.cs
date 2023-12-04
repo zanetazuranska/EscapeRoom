@@ -6,9 +6,10 @@ public class GameSceneManager : MonoBehaviour
 {
     public static GameSceneManager Instance;
 
-    private Scene activeScene;
+    private Scene _activeScene;
+    private Scene _pendingScene;
 
-    public System.Action<Scene> OnSceneLoaded;
+    public System.Action<Scene> OnSceneLoaded; //zmien na UnityEvent
 
     private bool _isSceneLoaded = false;
 
@@ -34,26 +35,35 @@ public class GameSceneManager : MonoBehaviour
     {
         for(int i = 0; i<SceneManager.sceneCount; i++)
         {
-            if(SceneManager.GetSceneAt(i).buildIndex == (int)scene)
+            if(SceneManager.GetSceneAt(i).name == scene.ToString())
             {
-                Debug.Log("You try to load the same scene again");
+                Debug.LogWarningFormat("You try to load the same scene again, SceneName={0}", scene.ToString());
                 return;
             }
         }
 
         _isSceneLoaded = false;
 
-        SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
-        activeScene = scene;
+        _pendingScene = scene;
 
-        if(OnSceneLoaded != null)
-        {
-            OnSceneLoaded.Invoke(activeScene);
-        }
+        AsyncOperation loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
 
+        loadSceneRequest.completed += SceneLoadedCompleted; 
+
+        //zrob to w completed+=
         if (unloadCurrentScenes)
         {
             UnloadScenes();
+        }
+    }
+
+    private void SceneLoadedCompleted(AsyncOperation asyncOperation)
+    {
+        _activeScene = _pendingScene;
+
+        if (OnSceneLoaded != null)
+        {
+            OnSceneLoaded.Invoke(_activeScene);
         }
     }
 
@@ -71,7 +81,7 @@ public class GameSceneManager : MonoBehaviour
 
     public Scene GetActiveScene()
     {
-        return activeScene;
+        return _activeScene;
     }
 
     public void IsSceneLoaded()

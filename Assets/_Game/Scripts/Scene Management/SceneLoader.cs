@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField]
     private ER.GameController _gameController; 
 
-    void Start()
+    private void Start()
     {
         GameSceneManager.Instance.IsSceneLoaded();
 

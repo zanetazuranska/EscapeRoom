@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class GameSceneConnector : MonoBehaviour
 {
-    public static System.Action<GameController> OnGameSceneLoaded;
+    public static System.Action<GameController> OnGameSceneLoaded; //unity event
 
     [SerializeField]
-    private GameController m_GameController;
+    private GameController _gameController;
 
     public void Start()
     {
         if(OnGameSceneLoaded != null)
-        OnGameSceneLoaded.Invoke(m_GameController);
+        OnGameSceneLoaded.Invoke(_gameController);
     }
 }
