@@ -29,7 +29,7 @@ namespace ER
             //Scene Manager Test
             if(Input.GetKeyUp(KeyCode.Escape))
             {
-                GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.MENU, true);
+               GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.MENU, true);
             }
 
             if (Input.GetKeyUp(KeyCode.A))

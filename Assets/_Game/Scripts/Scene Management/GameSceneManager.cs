@@ -1,4 +1,6 @@
 using ER;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +14,13 @@ public class GameSceneManager : MonoBehaviour
     public System.Action<Scene> OnSceneLoaded; //zmien na UnityEvent
 
     private bool _isSceneLoaded = false;
+    private bool _unloadCurrentScenes = false;
+
+    //Transitions between scenes
+    [SerializeField] private Animator _sceneFadeAnimator;
+    [SerializeField] private SceneFade _sceneFade;
+    private bool _outAnimComplete;
+
 
     public enum Scene
     {
@@ -33,28 +42,35 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadScene(Scene scene, bool unloadCurrentScenes)
     {
-        for(int i = 0; i<SceneManager.sceneCount; i++)
+        for (int i = 0; i < SceneManager.sceneCount; i++)
         {
-            if(SceneManager.GetSceneAt(i).name == scene.ToString())
+            if (SceneManager.GetSceneAt(i).name == scene.ToString())
             {
                 Debug.LogWarningFormat("You try to load the same scene again, SceneName={0}", scene.ToString());
+
                 return;
             }
         }
 
+        _unloadCurrentScenes = unloadCurrentScenes;
+        StartCoroutine("LoadSceneC", scene);
+    }
+
+    private IEnumerator LoadSceneC(Scene scene)
+    {
         _isSceneLoaded = false;
+
+        _outAnimComplete = false;
+        _sceneFade.OnOutAnimComplete.AddListener(OnOutAnimCompleteHandler);
+        _sceneFadeAnimator.SetBool("Out", true);
+
+        yield return new WaitUntil(() => _outAnimComplete);
 
         _pendingScene = scene;
 
         AsyncOperation loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
 
         loadSceneRequest.completed += SceneLoadedCompleted; 
-
-        //zrob to w completed+=
-        if (unloadCurrentScenes)
-        {
-            UnloadScenes();
-        }
     }
 
     private void SceneLoadedCompleted(AsyncOperation asyncOperation)
@@ -65,6 +81,14 @@ public class GameSceneManager : MonoBehaviour
         {
             OnSceneLoaded.Invoke(_activeScene);
         }
+
+        _isSceneLoaded = true;
+        _sceneFadeAnimator.SetBool("In", true);
+
+        if(_unloadCurrentScenes)
+        {
+            UnloadScenes();
+        }
     }
 
     private void UnloadScenes()
@@ -73,10 +97,16 @@ public class GameSceneManager : MonoBehaviour
         {
             for (int i = 1; i < SceneManager.sceneCount; i++)
             {
-                if(SceneManager.GetSceneAt(i) != null)
-                SceneManager.UnloadSceneAsync(i);
+                if(SceneManager.GetSceneAt(i) != null && SceneManager.GetSceneAt(i).buildIndex != (int)_activeScene)
+                SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i).buildIndex);
             }
         }
+    }
+
+    private void OnOutAnimCompleteHandler ()
+    {
+        _outAnimComplete = true;
+        _sceneFade.OnOutAnimComplete.RemoveListener(OnOutAnimCompleteHandler);
     }
 
     public Scene GetActiveScene()
