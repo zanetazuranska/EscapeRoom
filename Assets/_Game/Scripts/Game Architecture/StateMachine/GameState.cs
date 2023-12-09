@@ -10,7 +10,7 @@ namespace ER
         {
             Debug.Log("Enter GameState");
 
-            GameSceneManager.Instance.OnSceneLoaded += HandleGameSceneLoaded;
+            GameSceneManager.Instance.OnSceneLoaded.AddListener(HandleGameSceneLoaded);
         }
 
         public override void UpdateState(StateMachine stateMachine)
@@ -25,7 +25,7 @@ namespace ER
 
         private void HandleGameSceneLoaded(GameSceneManager.Scene scene)
         {
-            GameSceneManager.Instance.OnSceneLoaded -= HandleGameSceneLoaded;
+            GameSceneManager.Instance.OnSceneLoaded.RemoveListener(HandleGameSceneLoaded);
             GameSceneConnector.OnGameSceneLoaded = HandleGameControllerConnectorLoaded;
         }
 

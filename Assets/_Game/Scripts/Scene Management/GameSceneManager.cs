@@ -1,26 +1,35 @@
 using ER;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.Events;
 
 public class GameSceneManager : MonoBehaviour
 {
     public static GameSceneManager Instance;
 
+    private AsyncOperation _loadSceneRequest;
+
     private Scene _activeScene;
     private Scene _pendingScene;
 
-    public System.Action<Scene> OnSceneLoaded; //zmien na UnityEvent
+    public UnityEvent<Scene> OnSceneLoaded = new UnityEvent<Scene>();
 
     private bool _isSceneLoaded = false;
     private bool _unloadCurrentScenes = false;
 
     //Transitions between scenes
+    [Header("Transition Settings")]
     [SerializeField] private Animator _sceneFadeAnimator;
     [SerializeField] private SceneFade _sceneFade;
     private bool _outAnimComplete;
 
+    //Loading 
+    [Header("Loading Screen Settings")]
+    [SerializeField] private TextMeshProUGUI _loadingPercentages;
+    [SerializeField] private GameObject _loadingObj;
+    private int _percentages = 0;
 
     public enum Scene
     {
@@ -40,6 +49,12 @@ public class GameSceneManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(!_isSceneLoaded)
+            SetLoadingPercentages();
+    }
+
     public void LoadScene(Scene scene, bool unloadCurrentScenes)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -53,6 +68,7 @@ public class GameSceneManager : MonoBehaviour
         }
 
         _unloadCurrentScenes = unloadCurrentScenes;
+
         StartCoroutine("LoadSceneC", scene);
     }
 
@@ -68,9 +84,10 @@ public class GameSceneManager : MonoBehaviour
 
         _pendingScene = scene;
 
-        AsyncOperation loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
+        StartCoroutine("SetLoadingPercentages");
+        _loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
 
-        loadSceneRequest.completed += SceneLoadedCompleted; 
+        _loadSceneRequest.completed += SceneLoadedCompleted;
     }
 
     private void SceneLoadedCompleted(AsyncOperation asyncOperation)
@@ -85,7 +102,7 @@ public class GameSceneManager : MonoBehaviour
         _isSceneLoaded = true;
         _sceneFadeAnimator.SetBool("In", true);
 
-        if(_unloadCurrentScenes)
+        if (_unloadCurrentScenes)
         {
             UnloadScenes();
         }
@@ -106,7 +123,35 @@ public class GameSceneManager : MonoBehaviour
     private void OnOutAnimCompleteHandler ()
     {
         _outAnimComplete = true;
+
+        _loadingPercentages.text = "0 %";
+        _loadingObj.SetActive(true);
+
         _sceneFade.OnOutAnimComplete.RemoveListener(OnOutAnimCompleteHandler);
+    }
+
+    private IEnumerator SetLoadingPercentages()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        if(_isSceneLoaded)
+        {
+            _loadingPercentages.text = "100 %";
+            yield return new WaitForSeconds(0.1f);
+            _loadingObj.SetActive(false);
+            _loadingPercentages.text = "0 %";
+        }
+        else if (_percentages + 10 >= 100 && !_isSceneLoaded)
+        {
+            _loadingPercentages.text = _percentages.ToString() + " %";
+            StartCoroutine("SetLoadingPercentages");
+        }
+        else
+        {
+            _percentages += 10;
+            _loadingPercentages.text = _percentages.ToString() + " %";
+            StartCoroutine("SetLoadingPercentages");
+        }
     }
 
     public Scene GetActiveScene()
