@@ -6,9 +6,9 @@ namespace ER
     {
         public UnityEvent OnStateChange = new UnityEvent();
 
-        private ApplicationFlowController.GameStates _currentGameStates;
-        private ApplicationFlowController.GameStates _previousGameState;
-        private ApplicationFlowController.GameStates _nextGameStates;
+        private GameStates.GameStatesEnum _currentGameStates;
+        private GameStates.GameStatesEnum _previousGameState;
+        private GameStates.GameStatesEnum _nextGameStates;
 
         private BaseState _currentState;
 
@@ -20,7 +20,7 @@ namespace ER
             _currentState = _currentGameState;
             _currentGameState.Context = this;
             _currentGameState.EnterState(this);
-            _currentGameStates = (ApplicationFlowController.GameStates)_currentState.GetStateId();
+            _currentGameStates = (GameStates.GameStatesEnum)_currentState.GetStateId();
         }
 
         public void Update()
@@ -28,33 +28,33 @@ namespace ER
             _currentState.UpdateState(this);
         }
 
-        public void ChangeState(BaseState state, ApplicationFlowController.GameStates nextState)
+        public void ChangeState(BaseState state, GameStates.GameStatesEnum nextState)
         {
             _currentState.ExitState(this);
 
             OnStateChange.Invoke();
 
-            _previousGameState = (ApplicationFlowController.GameStates)_currentState.GetStateId();
+            _previousGameState = (GameStates.GameStatesEnum)_currentState.GetStateId();
             _nextGameStates = nextState;
 
             _currentState = state;
             _currentState.Context = this;
             state.EnterState(this);
 
-            _currentGameStates = (ApplicationFlowController.GameStates)_currentState.GetStateId();
+            _currentGameStates = (GameStates.GameStatesEnum)_currentState.GetStateId();
         }
 
-        public ApplicationFlowController.GameStates GetCurrentGameState()
+        public GameStates.GameStatesEnum GetCurrentGameState()
         {
             return _currentGameStates;
         }
 
-        public ApplicationFlowController.GameStates GetPreviousGameState()
+        public GameStates.GameStatesEnum GetPreviousGameState()
         {
             return _previousGameState;
         }
 
-        public ApplicationFlowController.GameStates GetNextGameState()
+        public GameStates.GameStatesEnum GetNextGameState()
         {
             return _nextGameStates;
         }

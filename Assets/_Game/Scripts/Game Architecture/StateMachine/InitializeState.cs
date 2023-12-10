@@ -9,6 +9,9 @@ namespace ER
         public override void EnterState(StateMachine stateMachine)
         {
             Debug.Log("Enter InitializeState");
+
+            GameSceneManager.Instance.OnSceneLoaded.AddListener(OnMenuLoad);
+            GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.MENU, true);
         }
 
         public override void UpdateState(StateMachine stateMachine)
@@ -19,6 +22,13 @@ namespace ER
         public override void ExitState(StateMachine stateMachine)
         {
             
+        }
+
+        private void OnMenuLoad(GameSceneManager.Scene scene)
+        {
+            GameSceneManager.Instance.OnSceneLoaded.RemoveListener(OnMenuLoad);
+
+            Context.ChangeState(GameStates.Instance.GetMainMenuState(), GameStates.GameStatesEnum.MatchmakingState);
         }
     }
 }

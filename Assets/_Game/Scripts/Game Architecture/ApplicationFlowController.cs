@@ -6,22 +6,9 @@ namespace ER
     {
         private StateMachine _stateMachine = new StateMachine();
 
-        public enum GameStates
-        {
-            InitializeState = 0,
-            MainMenuState = 1,
-            MatchmakingState = 2,
-            GameState = 3,
-        }
-
-        private InitializeState _initializeState = new InitializeState((int)GameStates.InitializeState);
-        private MainMenuState _mainMenuState = new MainMenuState((int)GameStates.MainMenuState);
-        private MatchmakingState _matchmakingState = new MatchmakingState((int)GameStates.MatchmakingState);
-        private GameState _gameState = new GameState((int)GameStates.GameState);
-
         private void Start()
         {
-            _stateMachine.Start(_initializeState);
+            _stateMachine.Start(GameStates.Instance.GetInitializeState());
         }
 
         private void Update()

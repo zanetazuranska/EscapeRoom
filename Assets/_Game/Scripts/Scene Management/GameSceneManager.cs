@@ -23,6 +23,7 @@ public class GameSceneManager : MonoBehaviour
     [Header("Transition Settings")]
     [SerializeField] private Animator _sceneFadeAnimator;
     [SerializeField] private SceneFade _sceneFade;
+    [SerializeField] private GameObject _sceneFadeObj;
     private bool _outAnimComplete;
 
     //Loading 
@@ -35,6 +36,7 @@ public class GameSceneManager : MonoBehaviour
     {
         MENU = 1,
         GameScene = 2,
+        MatchmakingScene = 3,
     }
 
     private void Awake()
@@ -77,7 +79,10 @@ public class GameSceneManager : MonoBehaviour
         _isSceneLoaded = false;
 
         _outAnimComplete = false;
+
+        _sceneFadeObj.SetActive(true);
         _sceneFade.OnOutAnimComplete.AddListener(OnOutAnimCompleteHandler);
+        _sceneFade.OnInAnimComplete.AddListener(OnInAnimCompleteHandler);
         _sceneFadeAnimator.SetBool("Out", true);
 
         yield return new WaitUntil(() => _outAnimComplete);
@@ -130,6 +135,12 @@ public class GameSceneManager : MonoBehaviour
         _sceneFade.OnOutAnimComplete.RemoveListener(OnOutAnimCompleteHandler);
     }
 
+    private void OnInAnimCompleteHandler()
+    {
+        _sceneFade.OnInAnimComplete.RemoveListener(OnInAnimCompleteHandler);
+        _sceneFadeObj.SetActive(false);
+    }
+
     private IEnumerator SetLoadingPercentages()
     {
         yield return new WaitForSeconds(0.2f);
@@ -162,5 +173,10 @@ public class GameSceneManager : MonoBehaviour
     public void IsSceneLoaded()
     {
         _isSceneLoaded = true;
+    }
+
+    public SceneFade GetSceneFade()
+    {
+        return _sceneFade;
     }
 }
