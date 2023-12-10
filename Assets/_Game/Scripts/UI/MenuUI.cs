@@ -21,7 +21,6 @@ public class MenuUI : MonoBehaviour
 
     public void StartButton()
     {
-        Debug.Log("Start click");
         OnStartClick.Invoke();
     }
 

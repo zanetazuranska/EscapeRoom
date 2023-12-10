@@ -1,11 +1,10 @@
 using ER;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameSceneConnector : MonoBehaviour
 {
-    public static System.Action<GameController> OnGameSceneLoaded; //unity event
+    public static UnityEvent<GameController> OnGameSceneLoaded = new UnityEvent<GameController>(); //unity event
 
     [SerializeField]
     private GameController _gameController;

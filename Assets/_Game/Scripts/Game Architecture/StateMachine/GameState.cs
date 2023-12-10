@@ -26,11 +26,13 @@ namespace ER
         private void HandleGameSceneLoaded(GameSceneManager.Scene scene)
         {
             GameSceneManager.Instance.OnSceneLoaded.RemoveListener(HandleGameSceneLoaded);
-            GameSceneConnector.OnGameSceneLoaded = HandleGameControllerConnectorLoaded;
+            GameSceneConnector.OnGameSceneLoaded.AddListener(HandleGameControllerConnectorLoaded);
         }
 
         private void HandleGameControllerConnectorLoaded(GameController gameController)
         {
+            GameSceneConnector.OnGameSceneLoaded.RemoveListener(HandleGameControllerConnectorLoaded);
+
             // Yupi! mamy game controllera w stanie.
         }
     }
