@@ -21,7 +21,7 @@ public class NetworkSessionManager : MonoBehaviour
         }
     }
 
-    public void AddGameNetworkData (NetModeEnum netMode, string portNum, string iPAddress, string playerName)
+    public void AddGameNetworkData (ENetMode netMode, string portNum, string iPAddress, string playerName)
     {
 
         var gameNetworkData = ScriptableObject.CreateInstance<GameNetworkData>();

@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297121cf82c9e0c4ebf171073dd72c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameNetworkDataList: []
 --- !u!4 &486469381
 Transform:
   m_ObjectHideFlags: 0
@@ -374,7 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1099,6 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a3aecd4f0d1b5840bbe547a839b8375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 4677955986177763688}
   OnOutAnimComplete:
     m_PersistentCalls:
       m_Calls: []

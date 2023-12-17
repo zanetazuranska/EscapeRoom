@@ -3,16 +3,18 @@ using UnityEngine.Events;
 
 public class SceneFade : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
+
     public void Out()
     {
-        GetComponent<Animator>().SetBool("Out", false);
+        _animator.SetBool("Out", false);
 
         OnOutAnimComplete.Invoke();
     }
 
     public void In()
     {
-        GetComponent<Animator>().SetBool("In", false);
+        _animator.SetBool("In", false);
 
         OnInAnimComplete.Invoke();
     }

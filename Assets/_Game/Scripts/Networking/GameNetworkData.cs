@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class GameNetworkData : ScriptableObject
 {
-    public enum NetModeEnum
+    public enum ENetMode
     {
         Host = 1,
         Client = 2,
     }
 
-    public NetModeEnum netMode;
+    public ENetMode netMode;
     public string portNum;
     public string iPAddress;
     public string playerName;

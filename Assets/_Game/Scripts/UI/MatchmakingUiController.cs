@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
-using System.Globalization;
 
 public class MatchmakingUiController : MonoBehaviour
 {
@@ -39,13 +36,13 @@ public class MatchmakingUiController : MonoBehaviour
         OnJoinGameClick.Invoke();
 
         
-        NetworkSessionManager.Instance.AddGameNetworkData(GameNetworkData.NetModeEnum.Client, _portNum.text, _hostIP.text, _playerName.text);
+        NetworkSessionManager.Instance.AddGameNetworkData(GameNetworkData.ENetMode.Client, _portNum.text, _hostIP.text, _playerName.text);
     }
 
     public void HostGame()
     {
         OnHostGameClick.Invoke();
 
-        NetworkSessionManager.Instance.AddGameNetworkData(GameNetworkData.NetModeEnum.Host, _portNum.text, _hostIP.text, _playerName.text);
+        NetworkSessionManager.Instance.AddGameNetworkData(GameNetworkData.ENetMode.Host, _portNum.text, _hostIP.text, _playerName.text);
     }
 }

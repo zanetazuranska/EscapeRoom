@@ -26,12 +26,12 @@ public class MenuUI : MonoBehaviour
 
     public void Options()
     {
-
+        Debug.LogError("Options button not set");
     }
 
     public void Credits()
     {
-
+        Debug.LogError("Credits button not set");
     }
 
     public void Exit()
