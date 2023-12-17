@@ -96,6 +96,7 @@ public class NetworkSessionManager : MonoBehaviour
         {
             if (splitValues[i].Length > 3 || splitValues[i].Length < 1)
             {
+                Debug.Log("Lenght 1");
                 return false;
             }
 
@@ -105,15 +106,21 @@ public class NetworkSessionManager : MonoBehaviour
             {
                 if (!(value[0] >= 48 && value[0] <= 50))
                 {
+                    Debug.Log("Lenght 2");
                     return false;
                 }
-                else if(!(value[1] >= 48 && value[1] <= 53))
+                else if (value[0] == 2)
                 {
-                    return false;
-                }
-                else if (!(value[2] >= 48 && value[2] <= 53))
-                {
-                    return false;
+                    if (!(value[1] >= 48 && value[1] <= 53))
+                    {
+                        Debug.Log("Lenght 3");
+                        return false;
+                    }
+                    else if (!(value[2] >= 48 && value[2] <= 53))
+                    {
+                        Debug.Log("Lenght 4");
+                        return false;
+                    }
                 }
             }
         }

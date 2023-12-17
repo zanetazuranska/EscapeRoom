@@ -32,6 +32,11 @@ public class GameSceneManager : MonoBehaviour
     [SerializeField] private GameObject _loadingObj;
     private int _percentages = 0;
 
+    //Scene loading time
+    private float _minSceneLoadingTime = 2.0f;
+    private bool _canCountTime = false;
+    [SerializeField] private float _countingTime = 0;
+
     public enum Scene
     {
         MENU = 1,
@@ -53,8 +58,16 @@ public class GameSceneManager : MonoBehaviour
 
     private void Update()
     {
-        if(!_isSceneLoaded)
-            SetLoadingPercentages();
+        //if(!_isSceneLoaded)
+            //SetLoadingPercentages();
+    }
+
+    private void FixedUpdate()
+    {
+        if (_canCountTime)
+        {
+            _countingTime += Time.deltaTime;
+        }
     }
 
     public void LoadScene(Scene scene, bool unloadCurrentScenes)
@@ -89,7 +102,9 @@ public class GameSceneManager : MonoBehaviour
 
         _pendingScene = scene;
 
-        StartCoroutine("SetLoadingPercentages");
+        _countingTime = 0;
+        _canCountTime = true;
+        StartCoroutine(SetLoadingPercentages());
         _loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
 
         _loadSceneRequest.completed += SceneLoadedCompleted;
@@ -105,7 +120,6 @@ public class GameSceneManager : MonoBehaviour
         }
 
         _isSceneLoaded = true;
-        _sceneFadeAnimator.SetBool("In", true);
 
         if (_unloadCurrentScenes)
         {
@@ -147,21 +161,36 @@ public class GameSceneManager : MonoBehaviour
 
         if(_isSceneLoaded)
         {
-            _loadingPercentages.text = "100 %";
-            yield return new WaitForSeconds(0.1f);
-            _loadingObj.SetActive(false);
-            _loadingPercentages.text = "0 %";
+            if(_countingTime >= _minSceneLoadingTime)
+            {
+                _loadingPercentages.text = "100 %";
+                yield return new WaitForSeconds(0.1f);
+                _percentages = 0;
+                _loadingObj.SetActive(false);
+                _loadingPercentages.text = "0 %";
+                _canCountTime = false;
+
+                _sceneFadeAnimator.SetBool("In", true);
+            }
+            else
+            {
+                if(_percentages + 10 < 100)
+                    _percentages += 10;
+
+                _loadingPercentages.text = _percentages.ToString() + " %";
+                StartCoroutine(SetLoadingPercentages());
+            }
         }
         else if (_percentages + 10 >= 100 && !_isSceneLoaded)
         {
             _loadingPercentages.text = _percentages.ToString() + " %";
-            StartCoroutine("SetLoadingPercentages");
+            StartCoroutine(SetLoadingPercentages());
         }
         else
         {
             _percentages += 10;
             _loadingPercentages.text = _percentages.ToString() + " %";
-            StartCoroutine("SetLoadingPercentages");
+            StartCoroutine(SetLoadingPercentages());
         }
     }
 
