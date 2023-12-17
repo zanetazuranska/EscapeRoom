@@ -106,6 +106,7 @@ public class GameSceneManager : MonoBehaviour
         _canCountTime = true;
         StartCoroutine(SetLoadingPercentages());
         _loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
+        Debug.Log("Load scene " + scene);
 
         _loadSceneRequest.completed += SceneLoadedCompleted;
     }

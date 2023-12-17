@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private PlayerNetworkController _playerNetworkController;
+
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _mouseSensivity = 100f;
 
@@ -24,6 +27,8 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
+        if (!_playerNetworkController.IsOwner) return;
+
         _mouseX = _playerInput.CameraController.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
 
         _mouseY = _playerInput.CameraController.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;

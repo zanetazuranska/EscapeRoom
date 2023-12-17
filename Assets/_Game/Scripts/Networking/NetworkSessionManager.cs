@@ -2,14 +2,16 @@ using ER;
 using UnityEngine;
 using System.Collections.Generic;
 using static GameNetworkData;
+using Unity.Netcode.Transports.UTP;
 using Unity.VisualScripting;
-using System;
 
 public class NetworkSessionManager : MonoBehaviour
 {
     public static NetworkSessionManager Instance { get; private set; }
 
     [SerializeField] private List<GameNetworkData> _gameNetworkDataList = new List<GameNetworkData>();
+
+    [SerializeField] private UnityTransport _unityTransport;
 
     public enum DataValidationErrors
     {
@@ -58,6 +60,8 @@ public class NetworkSessionManager : MonoBehaviour
         gameNetworkData.playerName = playerName;
 
         _gameNetworkDataList.Add(gameNetworkData);
+
+        //SetUnityTransport(portNum, iPAddress);
 
         return DataValidationErrors.None;
     }
@@ -126,5 +130,16 @@ public class NetworkSessionManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void SetUnityTransport(string portNum, string iPAddress)
+    {
+        _unityTransport.ConnectionData.Address = iPAddress;
+        _unityTransport.ConnectionData.Port = ushort.Parse(portNum);
+    }
+
+    public List<GameNetworkData> GetGameNetworkData()
+    {
+        return _gameNetworkDataList;
     }
 }

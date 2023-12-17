@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameNetworkDataList: []
+  _unityTransport: {fileID: 0}
 --- !u!4 &486469381
 Transform:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   _sceneFadeObj: {fileID: 1016356590297991853}
   _loadingPercentages: {fileID: 1616699440}
   _loadingObj: {fileID: 1279004220}
+  _countingTime: 0
 --- !u!4 &658540730
 Transform:
   m_ObjectHideFlags: 0

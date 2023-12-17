@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private PlayerNetworkController _playerNetworkController;
+
     CharacterController _characterController;
     public enum MovementState
     {
@@ -54,6 +57,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!_playerNetworkController.IsOwner) return;
+
         CalculateState();
         CalculateGravity();
         Move();
