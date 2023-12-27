@@ -42,6 +42,7 @@ namespace ER
         {
             GameSceneConnector.OnGameSceneLoaded.RemoveListener(HandleGameControllerConnectorLoaded);
 
+            Debug.Log("GameController");
             // Yupi! mamy game controllera w stanie.
         }
     }

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class CameraController : MonoBehaviour
+
+public class CameraController : NetworkBehaviour
 {
     [SerializeField] private PlayerNetworkController _playerNetworkController;
+    [SerializeField] private GameObject _camera;
 
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private float _mouseSensivity = 100f;
@@ -21,19 +22,37 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        _playerInput = new PlayerInput();
-        _playerInput.CameraController.Enable();
 
     }
+
+    public override void OnNetworkSpawn()
+    {
+        if(this.IsOwner)
+        {
+            _camera.SetActive(true);
+        }
+
+        _playerInput = new PlayerInput();
+        _playerInput.CameraController.Enable();
+    }
+
     void Update()
     {
-        if (!_playerNetworkController.IsOwner) return;
+        //if (this.IsClient)
+        //{
+         //   Debug.Log("NotOwner");
+         //   return;
+        //}
 
+        SetMouseDelta();
+        SetCamera();
+    }
+
+    void SetMouseDelta()
+    {
         _mouseX = _playerInput.CameraController.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
 
         _mouseY = _playerInput.CameraController.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
-
-        SetCamera();
     }
     
     void SetCamera()

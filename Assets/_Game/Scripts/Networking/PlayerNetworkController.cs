@@ -8,6 +8,11 @@ public class PlayerNetworkController : NetworkBehaviour
         NetworkManager.Singleton.OnClientStarted += OnClientStart;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        transform.position = new Vector3(-10.9f, 6.57f, -13.47f);
+    }
+
     private void Update()
     {
 
