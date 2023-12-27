@@ -58,8 +58,10 @@ public class GameSceneManager : MonoBehaviour
 
     private void Update()
     {
-        //if(!_isSceneLoaded)
-            //SetLoadingPercentages();
+        if (SceneManager.GetSceneAt(SceneManager.sceneCount - 1).buildIndex == 0)
+        {
+            SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(SceneManager.sceneCount - 1));
+        }
     }
 
     private void FixedUpdate()
@@ -105,6 +107,7 @@ public class GameSceneManager : MonoBehaviour
         _countingTime = 0;
         _canCountTime = true;
         StartCoroutine(SetLoadingPercentages());
+
         _loadSceneRequest = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
         Debug.Log("Load scene " + scene);
 

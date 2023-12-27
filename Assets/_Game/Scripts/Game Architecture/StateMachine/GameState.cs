@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ER
 {
@@ -9,7 +10,14 @@ namespace ER
 
         public override void EnterState(StateMachine stateMachine)
         {
-            Debug.Log("Enter GameState");
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name == GameSceneManager.Instance.GetActiveScene().ToString())
+                {
+                    SceneManager.SetActiveScene(SceneManager.GetSceneAt(i));
+                    break;
+                }
+            }
 
             GameSceneManager.Instance.OnSceneLoaded.AddListener(HandleGameSceneLoaded);
         }

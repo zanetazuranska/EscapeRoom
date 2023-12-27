@@ -9,8 +9,6 @@ namespace ER
 
         public override void EnterState(StateMachine stateMachine)
         {
-            Debug.Log("Enter MatchmakingState");
-
             MatchmakingUiController.Instance.OnBackClick.AddListener(OnBackClickHandler);
             MatchmakingUiController.Instance.OnJoinGameClick.AddListener(OnJoinGameClickHandler);
             MatchmakingUiController.Instance.OnHostGameClick.AddListener(OnHostGameClickHandler);

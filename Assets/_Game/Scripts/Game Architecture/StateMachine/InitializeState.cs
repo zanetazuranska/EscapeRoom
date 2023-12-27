@@ -6,9 +6,11 @@ namespace ER
     {
         public InitializeState(int id) : base(id) { }
 
+        public bool canEnter = true;
+
         public override void EnterState(StateMachine stateMachine)
         {
-            Debug.Log("Enter InitializeState");
+            canEnter = false;
 
             GameSceneManager.Instance.OnSceneLoaded.AddListener(OnMenuLoad);
             GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.MENU, true);

@@ -30,7 +30,7 @@ public class GameStates : MonoBehaviour
         }
     }
 
-    public BaseState GetInitializeState()
+    public InitializeState GetInitializeState()
     {
         return _initializeState;
     }

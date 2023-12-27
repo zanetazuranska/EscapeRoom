@@ -8,7 +8,10 @@ namespace ER
 
         private void Start()
         {
-            _stateMachine.Start(GameStates.Instance.GetInitializeState());
+            if(GameStates.Instance.GetInitializeState().canEnter)
+            {
+                _stateMachine.Start(GameStates.Instance.GetInitializeState());
+            }
         }
 
         private void Update()
