@@ -10,6 +10,8 @@ namespace ER
 
         private void Awake()
         {
+            Screen.SetResolution(1920, 1080, true);
+
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
