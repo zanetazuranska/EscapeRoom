@@ -9435,6 +9435,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e799ea5a71d70374cb02248dabdfadfd, type: 2}
+  - {fileID: 2100000, guid: 8b495986ce8c64f4ba411ab9efbf3ace, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9465,7 +9466,7 @@ Transform:
   m_GameObject: {fileID: 998025227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.1865241, z: -0, w: 0.9824504}
-  m_LocalPosition: {x: 32.6, y: 2.83, z: -43.1}
+  m_LocalPosition: {x: 32.6, y: 3.01, z: -43.1}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9484,12 +9485,14 @@ GameObject:
   - component: {fileID: 996030155}
   - component: {fileID: 991725227}
   - component: {fileID: 998059694}
+  - component: {fileID: 998059695}
+  - component: {fileID: 998059696}
   m_Layer: 0
   m_Name: TreasureChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!65 &998059694
 BoxCollider:
@@ -9512,6 +9515,41 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7691319, y: 0.74880433, z: 0.66038847}
   m_Center: {x: 0.0034741461, y: 0.11981495, z: -0.0021555573}
+--- !u!114 &998059695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998025227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4067676112
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &998059696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998025227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be16de0e0284a7a49a21a353f864e888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materials:
+  - {fileID: 2100000, guid: e799ea5a71d70374cb02248dabdfadfd, type: 2}
+  - {fileID: 2100000, guid: 8b495986ce8c64f4ba411ab9efbf3ace, type: 2}
 --- !u!1001 &1004349578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10582,7 +10620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f1a871656407f1843a8eea3435a3ef93, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f1a871656407f1843a8eea3435a3ef93, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -22847,7 +22885,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.262414, y: 1.1252842, z: 0.9568151}
+  m_Size: {x: 1, y: 1, z: 0.8}
   m_Center: {x: -0.050110303, y: -0.03639928, z: 0.4784073}
 --- !u!1001 &2034786950
 PrefabInstance:
