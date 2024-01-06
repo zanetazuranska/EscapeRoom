@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67516fea49f14a54289314ac17d59c2b, type: 3}
+  m_Name: Riddle1Paper1
+  m_EditorClassIdentifier: 
+  itemType: 0
+  hint: Look for similar ones
+  sprite: {fileID: -1660724392, guid: f30e5f0c8c8c9944cbadcb0111098de1, type: 3}
