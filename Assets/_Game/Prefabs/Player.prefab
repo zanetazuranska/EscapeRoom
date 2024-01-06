@@ -419,6 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerNetworkController: {fileID: 831538860073415965}
+  _items: []
   _movementStates: 
   _walkSpeed: 15
   _groundMask:

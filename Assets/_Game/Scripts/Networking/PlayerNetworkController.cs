@@ -5,7 +5,7 @@ public class PlayerNetworkController : NetworkBehaviour
 {
     private void Awake()
     {
-        NetworkManager.Singleton.OnClientStarted += OnClientStart;
+        
     }
 
     public override void OnNetworkSpawn()
@@ -16,10 +16,5 @@ public class PlayerNetworkController : NetworkBehaviour
     private void Update()
     {
 
-    }
-
-    private void OnClientStart()
-    {
-        Debug.Log("Client Start");
     }
 }

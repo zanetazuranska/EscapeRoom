@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerNetworkController _playerNetworkController;
 
     CharacterController _characterController;
+
+    private Inventory _inventory = new Inventory();
+
+    [SerializeField] private List<Item> _items = new List<Item>();
+
     public enum MovementState
     {
         Standing = 0,
@@ -58,6 +63,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!_playerNetworkController.IsOwner) return;
+
+        _items = _inventory.GetItems();
 
         CalculateState();
         CalculateGravity();

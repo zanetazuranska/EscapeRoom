@@ -4,6 +4,55 @@ using UnityEngine;
 
 public class Inventory
 {
-    private List<Item> _items = new List<Item>();
+    [SerializeField] private List<Item> _items = new List<Item>();
 
+    public bool Add(Item.ItemType _itemType)
+    {
+        Item item = ItemRegister.Instance.GetItem(_itemType);
+
+        if(item == null)
+        {
+            return false;
+        }
+        else
+        {
+            _items.Add(item);
+            return true;
+        }
+    }
+
+    public bool Add(Item item)
+    {
+        _items.Add(item);
+        return true;
+    }
+
+    public bool Remove(Item item)
+    {
+        if( _items.Contains(item) )
+        {
+            _items.Remove(item);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool Remove(Item.ItemType _itemType)
+    {
+        Item item = ItemRegister.Instance.GetItem(_itemType);
+
+        if(item != null && _items.Contains(item))
+        {
+            _items.Remove(item);
+            return true;
+        }
+
+        return false;
+    }
+
+    public List<Item> GetItems()
+    {
+        return _items;
+    }
 }
