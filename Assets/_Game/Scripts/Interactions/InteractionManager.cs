@@ -58,6 +58,12 @@ public class InteractionManager : NetworkBehaviour
             if (!EventSystem.current.IsPointerOverGameObject()
             && Physics.Raycast(_ray, out _hit))
             {
+                WorldItem worldItem = _hit.transform.GetComponent<WorldItem>();
+                if (worldItem != null)
+                {
+                    GetComponentInParent<PlayerController>().GetInventory().Add(worldItem.GetItemType());
+                }
+
                 if (_hit.transform.GetComponent<InteractableObject>() != null)
                 {
                     _hit.transform.GetComponent<InteractableObject>().OnClick();

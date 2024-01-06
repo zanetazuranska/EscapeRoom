@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreasureChest : InteractableObject
+public class WorldItem : InteractableObject
 {
+    [SerializeField] private Item.ItemType _itemType;
     private MeshRenderer _renderer;
 
     private void Awake()
@@ -13,7 +14,7 @@ public class TreasureChest : InteractableObject
 
     public override void OnClick()
     {
-        Debug.Log("On Click");
+       Destroy(this.gameObject);
     }
 
     public override void OnHover()
@@ -24,5 +25,10 @@ public class TreasureChest : InteractableObject
     public override void OnUnHover()
     {
         _renderer.materials[1].SetFloat("_Scale", 0f);
+    }
+
+    public Item.ItemType GetItemType()
+    {
+        return _itemType;
     }
 }

@@ -124,4 +124,9 @@ public class PlayerController : MonoBehaviour
     {
         return Physics.CheckSphere(_groundCheck.transform.position, _groundDistance, _groundMask);
     }
+
+    public Inventory GetInventory()
+    {
+        return _inventory;
+    }
 }
