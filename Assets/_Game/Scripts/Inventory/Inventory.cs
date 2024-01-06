@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Inventory
 {
     [SerializeField] private List<Item> _items = new List<Item>();
+
+    public UnityEvent<List<Item>> OnInventoryChange = new UnityEvent<List<Item>>();
 
     public bool Add(Item.ItemType _itemType)
     {
@@ -17,6 +20,7 @@ public class Inventory
         else
         {
             _items.Add(item);
+            OnInventoryChange.Invoke(_items);
             return true;
         }
     }
@@ -24,6 +28,7 @@ public class Inventory
     public bool Add(Item item)
     {
         _items.Add(item);
+        OnInventoryChange.Invoke(_items);
         return true;
     }
 
@@ -32,6 +37,7 @@ public class Inventory
         if( _items.Contains(item) )
         {
             _items.Remove(item);
+            OnInventoryChange.Invoke(_items);
             return true;
         }
 
@@ -45,6 +51,7 @@ public class Inventory
         if(item != null && _items.Contains(item))
         {
             _items.Remove(item);
+            OnInventoryChange.Invoke(_items);
             return true;
         }
 

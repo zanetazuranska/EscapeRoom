@@ -69,6 +69,11 @@ public class PlayerController : MonoBehaviour
         CalculateState();
         CalculateGravity();
         Move();
+
+        if(Input.GetKey(KeyCode.K))
+        {
+            _inventory.Remove(Item.ItemType.Riddle1Paper1);
+        }
     }
 
     private void CalculateGravity()
