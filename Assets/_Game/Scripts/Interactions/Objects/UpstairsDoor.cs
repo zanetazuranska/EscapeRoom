@@ -1,18 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UpstairsDoor : MonoBehaviour
+public class UpstairsDoor : InteractableObject
 {
-    // Start is called before the first frame update
-    void Start()
+    private MeshRenderer _renderer;
+
+    [SerializeField] private GameObject _upstairsRiddleUI;
+    [SerializeField] private Button _exit;
+     
+    private void Awake()
     {
-        
+        _renderer = GetComponent<MeshRenderer>();
+
+        _exit.onClick.AddListener(OnExitClick);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnClick()
     {
-        
+        _upstairsRiddleUI.SetActive(true);
+    }
+
+    public override void OnHover()
+    {
+        _renderer.materials[1].SetFloat("_Scale", 1.03f);
+    }
+
+    public override void OnUnHover()
+    {
+        _renderer.materials[1].SetFloat("_Scale", 0f);
+    }
+
+    public void OnExitClick()
+    {
+        _upstairsRiddleUI.SetActive(false);
+    }
+
+    public override void OnDestroy()
+    {
+        _exit.onClick.RemoveListener(OnExitClick);
     }
 }
+

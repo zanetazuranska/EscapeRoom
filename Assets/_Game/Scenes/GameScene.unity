@@ -2194,6 +2194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 180345136}
+  - component: {fileID: 180345137}
   m_Layer: 5
   m_Name: Module (3)
   m_TagString: Untagged
@@ -2224,6 +2225,24 @@ RectTransform:
   m_AnchoredPosition: {x: 685, y: -250}
   m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &180345137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180345135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14c8467d5949624f8a042b77b5d9534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowUp: {fileID: 2124501661}
+  _arrowDown: {fileID: 272423312}
+  _text: {fileID: 1119200932}
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &180989766
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4415,6 +4434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 359913382}
   - component: {fileID: 359913383}
+  - component: {fileID: 359913384}
   m_Layer: 5
   m_Name: ModulesHolder
   m_TagString: Untagged
@@ -4469,6 +4489,23 @@ MonoBehaviour:
   m_Spacing: {x: 40, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &359913384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359913381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368820836cda16d4bb4a675b6b198b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiRiddleModule1: {fileID: 2130261183}
+  _uiRiddleModule2: {fileID: 805510140}
+  _uiRiddleModule3: {fileID: 777454598}
+  _uiRiddleModule4: {fileID: 180345137}
+  _door: {fileID: 1921284368}
 --- !u!1 &392791475
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,7 +6210,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &493574209
 MonoBehaviour:
@@ -6218,7 +6255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 493574210}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1921284370}
+        m_TargetAssemblyTypeName: UpstairsDoor, Assembly-CSharp
+        m_MethodName: OnExitClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &493574210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8356,10 +8405,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 493574208}
   - {fileID: 164948730}
   - {fileID: 359913382}
   - {fileID: 1808663691}
+  - {fileID: 493574208}
   m_Father: {fileID: 1611396852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -9282,6 +9331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 777454597}
+  - component: {fileID: 777454598}
   m_Layer: 5
   m_Name: Module (2)
   m_TagString: Untagged
@@ -9312,6 +9362,24 @@ RectTransform:
   m_AnchoredPosition: {x: 495, y: -250}
   m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &777454598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777454596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14c8467d5949624f8a042b77b5d9534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowUp: {fileID: 1792444222}
+  _arrowDown: {fileID: 142090715}
+  _text: {fileID: 2092536161}
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &783299931
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9600,6 +9668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 805510139}
+  - component: {fileID: 805510140}
   m_Layer: 5
   m_Name: Module (1)
   m_TagString: Untagged
@@ -9630,6 +9699,24 @@ RectTransform:
   m_AnchoredPosition: {x: 305, y: -250}
   m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &805510140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805510138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14c8467d5949624f8a042b77b5d9534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowUp: {fileID: 90090392}
+  _arrowDown: {fileID: 970529354}
+  _text: {fileID: 1734909696}
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &809479812
 GameObject:
   m_ObjectHideFlags: 0
@@ -26089,6 +26176,7 @@ GameObject:
   - component: {fileID: 1921284373}
   - component: {fileID: 1921284372}
   - component: {fileID: 1921284371}
+  - component: {fileID: 1921284374}
   - component: {fileID: 1921284370}
   m_Layer: 0
   m_Name: UpstairsDoor
@@ -26124,6 +26212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a01254b388cb546ac8fce13c7226f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _upstairsRiddleUI: {fileID: 704699379}
+  _exit: {fileID: 493574209}
 --- !u!65 &1921284371
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26166,6 +26256,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 8b495986ce8c64f4ba411ab9efbf3ace, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26195,6 +26286,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921284368}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1921284374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921284368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 158001571
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1927094294
 GameObject:
   m_ObjectHideFlags: 0
@@ -28618,6 +28729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2130261182}
+  - component: {fileID: 2130261183}
   m_Layer: 5
   m_Name: Module
   m_TagString: Untagged
@@ -28648,6 +28760,24 @@ RectTransform:
   m_AnchoredPosition: {x: 115, y: -250}
   m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2130261183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130261181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14c8467d5949624f8a042b77b5d9534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowUp: {fileID: 1561867384}
+  _arrowDown: {fileID: 822824284}
+  _text: {fileID: 1106861290}
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2140018633
 PrefabInstance:
   m_ObjectHideFlags: 0
