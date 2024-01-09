@@ -8,6 +8,14 @@ namespace ER
 
         private GameController _currentGameController;
 
+        public enum StartAs
+        {
+            Host = 0,
+            Client = 1,
+        }
+
+        public StartAs startAs;
+
         private void Awake()
         {
             Screen.SetResolution(1920, 1080, true);

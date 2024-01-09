@@ -20,6 +20,15 @@ namespace ER
             }
 
             GameSceneManager.Instance.OnSceneLoaded.AddListener(HandleGameSceneLoaded);
+
+            if(EscapeRoomApp.Instance.startAs == EscapeRoomApp.StartAs.Host)
+            {
+                NetworkManager.Singleton.StartHost();
+            }
+            else
+            {
+                NetworkManager.Singleton.StartClient();
+            }
         }
 
         public override void UpdateState(StateMachine stateMachine)
