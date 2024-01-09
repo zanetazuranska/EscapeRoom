@@ -6,15 +6,9 @@ namespace ER
     public class GameController : MonoBehaviour
     {
 
-        void Start()
+        private void Start()
         {
             Initialize();
-        }
-
-
-        void Update()
-        {
-
         }
 
         private void OnDestroy()

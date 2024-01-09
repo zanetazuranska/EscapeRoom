@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class GameNetworkData : ScriptableObject
+namespace ER
 {
-    public enum ENetMode
+    public class GameNetworkData : ScriptableObject
     {
-        Host = 1,
-        Client = 2,
-    }
+        public enum ENetMode
+        {
+            Host = 1,
+            Client = 2,
+        }
 
-    public ENetMode netMode;
-    public string portNum;
-    public string iPAddress;
-    public string playerName;
+        public ENetMode netMode;
+        public string portNum;
+        public string iPAddress;
+        public string playerName;
+    }
 }

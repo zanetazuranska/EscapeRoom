@@ -1,23 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryScreenExit : MonoBehaviour
+namespace ER
 {
-    [SerializeField] private GameObject _parent;
-    private void Awake()
+    public class InventoryScreenExit : MonoBehaviour
     {
-        GetComponent<Button>().onClick.AddListener(OnExitClick);
+        [SerializeField] private GameObject _parent;
+        private void Awake()
+        {
+            GetComponent<Button>().onClick.AddListener(OnExitClick);
+        }
+
+        private void OnExitClick()
+        {
+            _parent.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            GetComponent<Button>().onClick.RemoveListener(OnExitClick);
+        }
     }
 
-    private void OnExitClick()
-    {
-        _parent.SetActive(false);
-    }
-
-    private void OnDestroy()
-    {
-        GetComponent<Button>().onClick.RemoveListener(OnExitClick);
-    }
 }

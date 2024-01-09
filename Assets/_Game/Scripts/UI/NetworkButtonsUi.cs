@@ -2,23 +2,27 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
 
-public class NetworkButtonsUi : MonoBehaviour
+namespace ER
 {
-    [SerializeField] private Button _host;
-    [SerializeField] private Button _client;
-
-    private void Awake()
+    public class NetworkButtonsUi : MonoBehaviour
     {
-        _host.onClick.AddListener(() =>
-        {
-            NetworkManager.Singleton.StartHost();
-            _host.onClick.RemoveAllListeners();
-        });
+        [SerializeField] private Button _host;
+        [SerializeField] private Button _client;
 
-        _client.onClick.AddListener(() =>
+        private void Awake()
         {
-            NetworkManager.Singleton.StartClient();
-            _client.onClick.RemoveAllListeners();
-        });
+            _host.onClick.AddListener(() =>
+            {
+                NetworkManager.Singleton.StartHost();
+                _host.onClick.RemoveAllListeners();
+            });
+
+            _client.onClick.AddListener(() =>
+            {
+                NetworkManager.Singleton.StartClient();
+                _client.onClick.RemoveAllListeners();
+            });
+        }
     }
+
 }

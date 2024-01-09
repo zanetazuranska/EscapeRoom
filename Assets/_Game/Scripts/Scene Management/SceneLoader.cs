@@ -1,17 +1,19 @@
 using ER;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+namespace ER
 {
-    [SerializeField]
-    private ER.GameController _gameController; 
-
-    private void Start()
+    public class SceneLoader : MonoBehaviour
     {
-        GameSceneManager.Instance.IsSceneLoaded();
+        [SerializeField]
+        private ER.GameController _gameController;
 
-        if(_gameController != null)
-        EscapeRoomApp.Instance.SetCurrentGameController(_gameController);
+        private void Start()
+        {
+            GameSceneManager.Instance.IsSceneLoaded();
+
+            if (_gameController != null)
+                EscapeRoomApp.Instance.SetCurrentGameController(_gameController);
+        }
     }
 }

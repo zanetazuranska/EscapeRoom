@@ -21,12 +21,21 @@ namespace ER
 
             GameSceneManager.Instance.OnSceneLoaded.AddListener(HandleGameSceneLoaded);
 
+
             if(EscapeRoomApp.Instance.startAs == EscapeRoomApp.StartAs.Host)
             {
+                GameNetworkData gameData = NetworkSessionManager.Instance.GetGameNetworkData(GameNetworkData.ENetMode.Host);
+
+                NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
+
                 NetworkManager.Singleton.StartHost();
             }
             else
             {
+                GameNetworkData gameData = NetworkSessionManager.Instance.GetGameNetworkData(GameNetworkData.ENetMode.Client);
+
+                NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
+
                 NetworkManager.Singleton.StartClient();
             }
         }

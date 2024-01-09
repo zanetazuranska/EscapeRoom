@@ -1,43 +1,46 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpstairsDoor : InteractableObject
+namespace ER
 {
-    private MeshRenderer _renderer;
-
-    [SerializeField] private GameObject _upstairsRiddleUI;
-    [SerializeField] private Button _exit;
-     
-    private void Awake()
+    public class UpstairsDoor : InteractableObject
     {
-        _renderer = GetComponent<MeshRenderer>();
+        private MeshRenderer _renderer;
 
-        _exit.onClick.AddListener(OnExitClick);
-    }
+        [SerializeField] private GameObject _upstairsRiddleUI;
+        [SerializeField] private Button _exit;
 
-    public override void OnClick()
-    {
-        _upstairsRiddleUI.SetActive(true);
-    }
+        private void Awake()
+        {
+            _renderer = GetComponent<MeshRenderer>();
 
-    public override void OnHover()
-    {
-        _renderer.materials[1].SetFloat("_Scale", 1.03f);
-    }
+            _exit.onClick.AddListener(OnExitClick);
+        }
 
-    public override void OnUnHover()
-    {
-        _renderer.materials[1].SetFloat("_Scale", 0f);
-    }
+        public override void OnClick()
+        {
+            _upstairsRiddleUI.SetActive(true);
+        }
 
-    public void OnExitClick()
-    {
-        _upstairsRiddleUI.SetActive(false);
-    }
+        public override void OnHover()
+        {
+            _renderer.materials[1].SetFloat("_Scale", 1.03f);
+        }
 
-    public override void OnDestroy()
-    {
-        _exit.onClick.RemoveListener(OnExitClick);
+        public override void OnUnHover()
+        {
+            _renderer.materials[1].SetFloat("_Scale", 0f);
+        }
+
+        public void OnExitClick()
+        {
+            _upstairsRiddleUI.SetActive(false);
+        }
+
+        public override void OnDestroy()
+        {
+            _exit.onClick.RemoveListener(OnExitClick);
+        }
     }
 }
 

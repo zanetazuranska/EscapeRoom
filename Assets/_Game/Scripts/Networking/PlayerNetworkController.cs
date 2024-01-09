@@ -1,20 +1,13 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerNetworkController : NetworkBehaviour
+namespace ER
 {
-    private void Awake()
+    public class PlayerNetworkController : NetworkBehaviour
     {
-        
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        transform.position = new Vector3(-10.9f, 6.57f, -13.47f);
-    }
-
-    private void Update()
-    {
-
+        public override void OnNetworkSpawn()
+        {
+            transform.position = new Vector3(-10.9f, 6.57f, -13.47f);
+        }
     }
 }

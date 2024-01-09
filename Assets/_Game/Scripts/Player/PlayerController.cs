@@ -4,139 +4,145 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+namespace ER
 {
-    [SerializeField] private PlayerNetworkController _playerNetworkController;
-
-    CharacterController _characterController;
-
-    private Inventory _inventory = new Inventory();
-
-    [SerializeField] private List<Item> _items = new List<Item>();
-
-    public enum MovementState
+    public class PlayerController : MonoBehaviour
     {
-        Standing = 0,
-        Walking = 1,
-    }
+        [SerializeField] private PlayerNetworkController _playerNetworkController;
 
-    public List<MovementState> _movementStates = new List<MovementState>();
+        CharacterController _characterController;
 
-    [Header("Movement")]
-    [SerializeField][Range(0f, 20f)] private float _walkSpeed = 10f;
+        private Inventory _inventory = new Inventory();
 
-    #region Movement variables
+        [SerializeField] private List<Item> _items = new List<Item>();
 
-    private PlayerInput _playerInput;
-
-    private bool _isStanding = false;
-    private bool _isWalkingRL = false;
-    private bool _isWalkingUD = false;
-
-    private Vector2 _moveDirection;
-    #endregion
-
-    #region Physics
-
-    [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private GameObject _groundCheck;
-    private float _groundDistance = 0.4f;
-    private float _gravity = -9.81f;
-    private Vector3 _velocity;
-
-    #endregion
-
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-
-        _playerInput = new PlayerInput();
-        _playerInput.Movement.Enable();
-
-        _playerInput.Movement.WalkRL.performed += _ => _isWalkingRL = true;
-        _playerInput.Movement.WalkRL.canceled += _ => _isWalkingRL = false;
-
-        _playerInput.Movement.WalkUD.performed += _ => _isWalkingUD = true;
-        _playerInput.Movement.WalkUD.canceled += _ => _isWalkingUD = false;
-    }
-
-    void FixedUpdate()
-    {
-        if (!_playerNetworkController.IsOwner) return;
-
-        _items = _inventory.GetItems();
-
-        CalculateState();
-        CalculateGravity();
-        Move();
-
-        if(Input.GetKey(KeyCode.K))
+        public enum MovementState
         {
-            _inventory.Remove(Item.ItemType.Riddle1Paper1);
+            Standing = 0,
+            Walking = 1,
         }
 
-        if (Input.GetKey(KeyCode.L))
+        public List<MovementState> _movementStates = new List<MovementState>();
+
+        [Header("Movement")]
+        [SerializeField][Range(0f, 20f)] private float _walkSpeed = 10f;
+
+        #region Movement variables
+
+        private PlayerInput _playerInput;
+
+        private bool _isStanding = false;
+        private bool _isWalkingRL = false;
+        private bool _isWalkingUD = false;
+
+        private Vector2 _moveDirection;
+        #endregion
+
+        #region Physics
+
+        [SerializeField] private LayerMask _groundMask;
+        [SerializeField] private GameObject _groundCheck;
+        private float _groundDistance = 0.4f;
+        private float _gravity = -9.81f;
+        private Vector3 _velocity;
+
+        #endregion
+
+        private void Awake()
         {
-            _inventory.Add(Item.ItemType.Riddle1Paper2);
-        }
-    }
+            _characterController = GetComponent<CharacterController>();
 
-    private void CalculateGravity()
-    {
-        if (GroundCheck() && _velocity.y < 0)
+            _playerInput = new PlayerInput();
+            _playerInput.Movement.Enable();
+
+            _playerInput.Movement.WalkRL.performed += _ => _isWalkingRL = true;
+            _playerInput.Movement.WalkRL.canceled += _ => _isWalkingRL = false;
+
+            _playerInput.Movement.WalkUD.performed += _ => _isWalkingUD = true;
+            _playerInput.Movement.WalkUD.canceled += _ => _isWalkingUD = false;
+        }
+
+        private void FixedUpdate()
         {
-            _velocity.y = -2f;
+            if (!_playerNetworkController.IsOwner)
+            {
+                return;
+            }
+
+            _items = _inventory.GetItems();
+
+            CalculateState();
+            CalculateGravity();
+            Move();
+
+            if (Input.GetKey(KeyCode.K))
+            {
+                _inventory.Remove(Item.ItemType.Riddle1Paper1);
+            }
+
+            if (Input.GetKey(KeyCode.L))
+            {
+                _inventory.Add(Item.ItemType.Riddle1Paper2);
+            }
         }
 
-        _velocity.y += _gravity * Time.deltaTime;
-        _characterController.Move(_velocity * Time.deltaTime);
-    }
-
-    private void Move()
-    {
-        _moveDirection.x = _playerInput.Movement.WalkRL.ReadValue<float>();
-        _moveDirection.y = _playerInput.Movement.WalkUD.ReadValue<float>();
-
-        Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
-        _characterController.Move(move * _walkSpeed * Time.deltaTime);
-    }
-
-    private void CalculateState()
-    {
-
-        if (_isWalkingRL || _isWalkingUD)
+        private void CalculateGravity()
         {
-            AddStateIfPossible(MovementState.Walking);
-            DeleteState(MovementState.Standing);
+            if (GroundCheck() && _velocity.y < 0)
+            {
+                _velocity.y = -2f;
+            }
+
+            _velocity.y += _gravity * Time.deltaTime;
+            _characterController.Move(_velocity * Time.deltaTime);
         }
-        else
+
+        private void Move()
         {
-            AddStateIfPossible(MovementState.Standing);
-            DeleteState(MovementState.Walking);
+            _moveDirection.x = _playerInput.Movement.WalkRL.ReadValue<float>();
+            _moveDirection.y = _playerInput.Movement.WalkUD.ReadValue<float>();
+
+            Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
+            _characterController.Move(move * _walkSpeed * Time.deltaTime);
         }
-    }
 
-    private void AddStateIfPossible(MovementState state)
-    {
-        if (_movementStates.Contains(state)) return;
-        else _movementStates.Add(state);
-    }
-
-    private void DeleteState(MovementState state)
-    {
-        if (_movementStates.Contains(state))
+        private void CalculateState()
         {
-            _movementStates.Remove(state);
+
+            if (_isWalkingRL || _isWalkingUD)
+            {
+                AddStateIfPossible(MovementState.Walking);
+                DeleteState(MovementState.Standing);
+            }
+            else
+            {
+                AddStateIfPossible(MovementState.Standing);
+                DeleteState(MovementState.Walking);
+            }
         }
-    }
 
-    private bool GroundCheck()
-    {
-        return Physics.CheckSphere(_groundCheck.transform.position, _groundDistance, _groundMask);
-    }
+        private void AddStateIfPossible(MovementState state)
+        {
+            if (_movementStates.Contains(state)) return;
+            else _movementStates.Add(state);
+        }
 
-    public Inventory GetInventory()
-    {
-        return _inventory;
+        private void DeleteState(MovementState state)
+        {
+            if (_movementStates.Contains(state))
+            {
+                _movementStates.Remove(state);
+            }
+        }
+
+        private bool GroundCheck()
+        {
+            return Physics.CheckSphere(_groundCheck.transform.position, _groundDistance, _groundMask);
+        }
+
+        public Inventory GetInventory()
+        {
+            return _inventory;
+        }
     }
 }
