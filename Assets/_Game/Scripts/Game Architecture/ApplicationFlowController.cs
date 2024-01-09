@@ -8,7 +8,7 @@ namespace ER
 
         private void Start()
         {
-            if(GameStates.Instance.GetInitializeState().canEnter)
+            if(GameStates.Instance.GetInitializeState()._canEnter)
             {
                 _stateMachine.Start(GameStates.Instance.GetInitializeState());
             }

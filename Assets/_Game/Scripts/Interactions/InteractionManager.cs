@@ -15,7 +15,10 @@ namespace ER
 
         private void Update()
         {
-            if (!this.IsOwner) return;
+            if (!IsOwner)
+            {
+                return;
+            }
 
             _ray = _camera.ScreenPointToRay(_cursor.position);
 
@@ -28,9 +31,11 @@ namespace ER
             if (!EventSystem.current.IsPointerOverGameObject()
                 && Physics.Raycast(_ray, out _hit))
             {
-                if (_hit.transform.GetComponent<InteractableObject>() != null)
+                InteractableObject interactableObject = _hit.transform.GetComponent<InteractableObject>();
+
+                if (interactableObject != null)
                 {
-                    _hit.transform.GetComponent<InteractableObject>().OnHover();
+                    interactableObject.OnHover();
                     _lastHitObj = _hit.transform.gameObject;
                 }
                 else
@@ -63,9 +68,11 @@ namespace ER
                         GetComponentInParent<PlayerController>().GetInventory().Add(worldItem.GetItemType());
                     }
 
-                    if (_hit.transform.GetComponent<InteractableObject>() != null)
+                    InteractableObject interactableObject = _hit.transform.GetComponent<InteractableObject>();
+
+                    if (interactableObject != null)
                     {
-                        _hit.transform.GetComponent<InteractableObject>().OnClick();
+                        interactableObject.OnClick();
                     }
                 }
             }

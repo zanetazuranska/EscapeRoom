@@ -35,14 +35,14 @@ namespace ER
             SetCamera();
         }
 
-        void SetMouseDelta()
+        private void SetMouseDelta()
         {
             _mouseX = _playerInput.CameraController.MouseX.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
 
             _mouseY = _playerInput.CameraController.MouseY.ReadValue<float>() * _mouseSensivity * Time.deltaTime;
         }
 
-        void SetCamera()
+        private void SetCamera()
         {
             _playerTransform.Rotate(Vector3.up * _mouseX);
 
