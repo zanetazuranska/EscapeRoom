@@ -9,7 +9,13 @@ namespace ER
 
         public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
             transform.position = _spawnPosition;
+
+            if(IsHost)
+            {
+                EscapeRoomApp.Instance.OnHostSpawned.Invoke();
+            }
         }
     }
 }

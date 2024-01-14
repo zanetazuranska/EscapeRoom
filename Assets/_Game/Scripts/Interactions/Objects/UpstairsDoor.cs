@@ -13,8 +13,6 @@ namespace ER
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
-
-            _exit.onClick.AddListener(OnExitClick);
         }
 
         public override void OnClick()
@@ -40,6 +38,17 @@ namespace ER
         public override void OnDestroy()
         {
             _exit.onClick.RemoveListener(OnExitClick);
+        }
+
+        public void SetRiddleUI(GameObject upstairsRiddleUI)
+        {
+            _upstairsRiddleUI = upstairsRiddleUI;
+        }
+
+        public void SetExitButton(Button exit)
+        {
+            _exit = exit;
+            _exit.onClick.AddListener(OnExitClick);
         }
     }
 }

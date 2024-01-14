@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ER
 {
@@ -7,6 +8,8 @@ namespace ER
         public static EscapeRoomApp Instance { get; private set; }
 
         private GameController _currentGameController;
+
+        public UnityEvent OnHostSpawned = new UnityEvent();
 
         public enum StartAs
         {
