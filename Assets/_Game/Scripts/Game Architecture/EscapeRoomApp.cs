@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,10 @@ namespace ER
         private GameController _currentGameController;
 
         public UnityEvent OnHostSpawned = new UnityEvent();
+        public UnityEvent OnClientSpawned = new UnityEvent();
+
+        [SerializeField] private Transform _winPrefab;
+        private Transform _winTransform;
 
         public enum StartAs
         {
@@ -36,6 +41,13 @@ namespace ER
         public void SetCurrentGameController(GameController gameController)
         {
             _currentGameController = gameController;
+        }
+
+        [ServerRpc]
+        public void WinServerRpc()
+        {
+            _winTransform = Instantiate(_winPrefab);
+            _winTransform.GetComponent<NetworkObject>().Spawn(true);
         }
 
     }

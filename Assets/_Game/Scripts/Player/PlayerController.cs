@@ -16,6 +16,9 @@ namespace ER
 
         [SerializeField] private List<Item> _items = new List<Item>();
 
+        [SerializeField] private GameObject[] _inventoryObjects = new GameObject[2];
+        private bool _isInventoryActive = false;
+
         public enum MovementState
         {
             Standing = 0,
@@ -54,12 +57,15 @@ namespace ER
 
             _playerInput = new PlayerInput();
             _playerInput.Movement.Enable();
+            _playerInput.Inventory.Enable();
 
             _playerInput.Movement.WalkRL.performed += _ => _isWalkingRL = true;
             _playerInput.Movement.WalkRL.canceled += _ => _isWalkingRL = false;
 
             _playerInput.Movement.WalkUD.performed += _ => _isWalkingUD = true;
             _playerInput.Movement.WalkUD.canceled += _ => _isWalkingUD = false;
+
+            _playerInput.Inventory.ActiveDesactiv.performed += ActiveOrDesactivInventory;
         }
 
         private void FixedUpdate()
@@ -71,19 +77,11 @@ namespace ER
 
             _items = _inventory.GetItems();
 
+            if (_isInventoryActive == true) return;
+
             CalculateState();
             CalculateGravity();
             Move();
-
-            if (Input.GetKey(KeyCode.K))
-            {
-                _inventory.Remove(Item.ItemType.Riddle1Paper1);
-            }
-
-            if (Input.GetKey(KeyCode.L))
-            {
-                _inventory.Add(Item.ItemType.Riddle1Paper2);
-            }
         }
 
         private void CalculateGravity()
@@ -143,6 +141,38 @@ namespace ER
         public Inventory GetInventory()
         {
             return _inventory;
+        }
+
+        private void ActiveOrDesactivInventory(InputAction.CallbackContext context)
+        {
+            if (_inventoryObjects[0].activeSelf == true)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                _isInventoryActive = false;
+
+                _inventoryObjects[0].SetActive(false);
+                _inventoryObjects[1].SetActive(false);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                _isInventoryActive = true;
+
+                _inventoryObjects[0].SetActive(true);
+                _inventoryObjects[1].SetActive(true);
+
+                _inventory.OnInventoryChange.Invoke(_inventory.GetItems());
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _playerInput.Inventory.ActiveDesactiv.performed -= ActiveOrDesactivInventory;
+        }
+
+        public bool GetIsIventoryActive()
+        {
+            return _isInventoryActive;
         }
     }
 }

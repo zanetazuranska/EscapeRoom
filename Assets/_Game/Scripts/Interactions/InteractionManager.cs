@@ -1,6 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 namespace ER
 {
@@ -8,6 +9,8 @@ namespace ER
     {
         [SerializeField] private Transform _cursor;
         [SerializeField] private Camera _camera;
+        [SerializeField] private GameObject _newItemUI;
+        [SerializeField] private GameObject _doorUI;
 
         private Ray _ray = new Ray();
         private RaycastHit _hit = new RaycastHit();
@@ -66,6 +69,22 @@ namespace ER
                     if (worldItem != null)
                     {
                         GetComponentInParent<PlayerController>().GetInventory().Add(worldItem.GetItemType());
+                        StartCoroutine(NewItemUI());
+                    }
+
+                    GarageDoor garageDoor = _hit.transform.GetComponent<GarageDoor>();
+                    if(garageDoor != null)
+                    {
+                        if (GetComponentInParent<PlayerController>().GetInventory().GetItems().Contains(ItemRegister.Instance.GetItem(Item.ItemType.DoorKey)))
+                        {
+                            garageDoor.OnClick();
+
+                            return;
+                        }
+                        else
+                        {
+                            StartCoroutine(DoorUI());
+                        }
                     }
 
                     InteractableObject interactableObject = _hit.transform.GetComponent<InteractableObject>();
@@ -76,6 +95,22 @@ namespace ER
                     }
                 }
             }
+        }
+
+        private IEnumerator NewItemUI()
+        {
+            _newItemUI.SetActive(true);
+            yield return new WaitForSeconds(2);
+
+            _newItemUI.SetActive(false);
+        }
+
+        private IEnumerator DoorUI()
+        {
+            _doorUI.SetActive(true);
+            yield return new WaitForSeconds(2);
+
+            _doorUI.SetActive(false);
         }
     }
 }

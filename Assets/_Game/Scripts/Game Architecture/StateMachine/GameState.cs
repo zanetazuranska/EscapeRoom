@@ -29,6 +29,8 @@ namespace ER
                 NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
 
                 NetworkManager.Singleton.StartHost();
+
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
@@ -37,6 +39,8 @@ namespace ER
                 NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
 
                 NetworkManager.Singleton.StartClient();
+
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
 

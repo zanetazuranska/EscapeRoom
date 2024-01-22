@@ -37,17 +37,17 @@ namespace ER
             _uiRiddleModule3.OnValueChanged.AddListener(CheckValues);
             _uiRiddleModule4.OnValueChanged.AddListener(CheckValues);
 
-            EscapeRoomApp.Instance.OnHostSpawned.AddListener(OnHostSpawned);
+            EscapeRoomApp.Instance.OnHostSpawned.AddListener(OnPlayerSpawned);
         }
 
-        private void OnHostSpawned()
+        private void OnPlayerSpawned()
         {
             _doorTransform = Instantiate(_doorPrefab);
             _doorTransform.GetComponent<NetworkObject>().Spawn(true);
             _doorTransform.GetComponent<UpstairsDoor>().SetRiddleUI(transform.GetChild(2).gameObject);
             _doorTransform.GetComponent<UpstairsDoor>().SetExitButton(_exit);
 
-            EscapeRoomApp.Instance.OnHostSpawned.RemoveListener(OnHostSpawned);
+            EscapeRoomApp.Instance.OnHostSpawned.RemoveListener(OnPlayerSpawned);
         }
 
         private void CheckValues()

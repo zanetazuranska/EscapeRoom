@@ -6,6 +6,7 @@ namespace ER
     public class CameraController : NetworkBehaviour
     {
         [SerializeField] private PlayerNetworkController _playerNetworkController;
+        [SerializeField] private PlayerController _playerController;
         [SerializeField] private GameObject _camera;
 
         [SerializeField] private Transform _playerTransform;
@@ -31,6 +32,8 @@ namespace ER
 
         private void Update()
         {
+            if (_playerController.GetIsIventoryActive() == true) return;
+
             SetMouseDelta();
             SetCamera();
         }
