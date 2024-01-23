@@ -61,8 +61,6 @@ namespace ER
 
             _gameNetworkDataList.Add(gameNetworkData);
 
-            //SetUnityTransport(portNum, iPAddress);
-
             return DataValidationErrors.None;
         }
 

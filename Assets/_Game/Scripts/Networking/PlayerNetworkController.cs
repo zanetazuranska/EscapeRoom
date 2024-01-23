@@ -23,6 +23,8 @@ namespace ER
             {
                 EscapeRoomApp.Instance.OnHostSpawned.Invoke();
             }
+
+            GarageDoor.Instance.RegisterPlayer(this.gameObject);
         }
     }
 }

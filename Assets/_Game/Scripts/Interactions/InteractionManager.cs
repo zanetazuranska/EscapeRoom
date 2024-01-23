@@ -2,6 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using TMPro;
 
 namespace ER
 {
@@ -9,12 +10,17 @@ namespace ER
     {
         [SerializeField] private Transform _cursor;
         [SerializeField] private Camera _camera;
-        [SerializeField] private GameObject _newItemUI;
-        [SerializeField] private GameObject _doorUI;
+        [SerializeField] private GameObject _textMessageObj;
+        [SerializeField] private TextMeshProUGUI _textMessage;
 
         private Ray _ray = new Ray();
         private RaycastHit _hit = new RaycastHit();
         private GameObject _lastHitObj;
+
+        //Texts to write
+        private const string NEW_ITEM_TEXT = "Added new item";
+        private const string DOOR = "The door is closed... How to get out?";
+        private const string EMPTY_CHEST = "The chest is empty";
 
         private void Update()
         {
@@ -62,6 +68,8 @@ namespace ER
         {
             if (Input.GetMouseButtonDown(0))
             {
+                bool canPerform = true;
+
                 if (!EventSystem.current.IsPointerOverGameObject()
                 && Physics.Raycast(_ray, out _hit))
                 {
@@ -69,7 +77,7 @@ namespace ER
                     if (worldItem != null)
                     {
                         GetComponentInParent<PlayerController>().GetInventory().Add(worldItem.GetItemType());
-                        StartCoroutine(NewItemUI());
+                        StartCoroutine(ShowTextMessage(NEW_ITEM_TEXT));
                     }
 
                     GarageDoor garageDoor = _hit.transform.GetComponent<GarageDoor>();
@@ -77,40 +85,44 @@ namespace ER
                     {
                         if (GetComponentInParent<PlayerController>().GetInventory().GetItems().Contains(ItemRegister.Instance.GetItem(Item.ItemType.DoorKey)))
                         {
+                            GetComponentInParent<PlayerController>().PlayerCanUseInput(false);
                             garageDoor.OnClick();
-
-                            return;
                         }
                         else
                         {
-                            StartCoroutine(DoorUI());
+                            StartCoroutine(ShowTextMessage(DOOR));
+                            canPerform = false;
                         }
+                    }
+
+                    TreasureChest treasureChest = _hit.transform.GetComponent<TreasureChest>();
+                    if (treasureChest != null)
+                    {
+                        StartCoroutine(ShowTextMessage(EMPTY_CHEST));
                     }
 
                     InteractableObject interactableObject = _hit.transform.GetComponent<InteractableObject>();
 
                     if (interactableObject != null)
                     {
-                        interactableObject.OnClick();
+                        if(canPerform)
+                        {
+                            interactableObject.OnClick();
+                            Debug.Log(canPerform + "Click");
+                        }     
                     }
                 }
             }
         }
 
-        private IEnumerator NewItemUI()
+        private IEnumerator ShowTextMessage(string message)
         {
-            _newItemUI.SetActive(true);
+            _textMessage.text = message;
+
+            _textMessageObj.SetActive(true);
             yield return new WaitForSeconds(2);
 
-            _newItemUI.SetActive(false);
-        }
-
-        private IEnumerator DoorUI()
-        {
-            _doorUI.SetActive(true);
-            yield return new WaitForSeconds(2);
-
-            _doorUI.SetActive(false);
+            _textMessageObj.SetActive(false);
         }
     }
 }

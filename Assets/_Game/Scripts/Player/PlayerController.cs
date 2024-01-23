@@ -145,6 +145,8 @@ namespace ER
 
         private void ActiveOrDesactivInventory(InputAction.CallbackContext context)
         {
+            if (!_playerNetworkController.IsOwner) return;
+
             if (_inventoryObjects[0].activeSelf == true)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -173,6 +175,11 @@ namespace ER
         public bool GetIsIventoryActive()
         {
             return _isInventoryActive;
+        }
+
+        public void PlayerCanUseInput(bool input)
+        {
+            _isInventoryActive = !input;
         }
     }
 }

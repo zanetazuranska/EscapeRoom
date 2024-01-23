@@ -7,16 +7,41 @@ namespace ER
 {
     public class GarageDoor : InteractableObject
     {
+        public static GarageDoor Instance { get; private set; }
+
         private MeshRenderer _renderer;
+
+        [SerializeField] private Animator _doorAnimator;
+        [SerializeField] private Animator _handleAnimator;
+
+        private const string ANIMATION_VARIABLE = "CanOpen";
+
+        [SerializeField] private List<GameObject> _players = new List<GameObject>();
 
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
+
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
 
         public override void OnClick()
         {
-            EscapeRoomApp.Instance.WinServerRpc();
+            foreach (var player in _players)
+            {
+                player.transform.position = new Vector3(20.0f, 7.57f, -3.1f);
+                player.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
+            }
+
+            _doorAnimator.SetBool(ANIMATION_VARIABLE, true);
+            _handleAnimator.SetBool(ANIMATION_VARIABLE, true);
         }
 
         public override void OnHover()
@@ -27,6 +52,11 @@ namespace ER
         public override void OnUnHover()
         {
             _renderer.materials[1].SetFloat("_Scale", 0f);
+        }
+
+        public void RegisterPlayer(GameObject player)
+        {
+            _players.Add(player);
         }
     }
 }
