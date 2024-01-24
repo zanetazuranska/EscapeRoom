@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NetworkManager
   - MainCanvas
+  - Upstairs
   layers:
   - Default
   - TransparentFX

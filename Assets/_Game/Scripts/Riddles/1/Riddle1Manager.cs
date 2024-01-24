@@ -1,10 +1,11 @@
+using NUnit.Framework;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ER
 {
-    public class Riddle1Manager : MonoBehaviour
+    public class Riddle1Manager : NetworkBehaviour
     {
         [SerializeField] private UiRiddleModule _uiRiddleModule1;
         [SerializeField] private UiRiddleModule _uiRiddleModule2;
@@ -65,8 +66,19 @@ namespace ER
 
         private void RiddleCorrect()
         {
+            RiddleCorrectServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void RiddleCorrectServerRpc()
+        {
+            if(_doorTransform == null)
+            {
+                _doorTransform = Object.FindFirstObjectByType<UpstairsDoor>().transform;
+            }
+
             _doorTransform.GetComponent<UpstairsDoor>().OnExitClick();
-            _doorTransform.GetComponent<NetworkObject>().Despawn(true);
+            _doorTransform.GetComponent<NetworkObject>().Despawn();
 
             Destroy(_doorTransform.gameObject);
             Destroy(transform.GetChild(2).gameObject);
@@ -85,8 +97,10 @@ namespace ER
             return true;
         }
 
-        private void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
+
             _uiRiddleModule1.OnValueChanged.RemoveListener(CheckValues);
             _uiRiddleModule2.OnValueChanged.RemoveListener(CheckValues);
             _uiRiddleModule3.OnValueChanged.RemoveListener(CheckValues);

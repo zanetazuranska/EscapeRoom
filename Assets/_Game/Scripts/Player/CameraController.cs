@@ -50,7 +50,7 @@ namespace ER
             _playerTransform.Rotate(Vector3.up * _mouseX);
 
             _rotation -= _mouseY;
-            _rotation = Mathf.Clamp(_rotation, -30f, 30f);
+            _rotation = Mathf.Clamp(_rotation, -40f, 40f);
             transform.localRotation = Quaternion.Euler(_rotation, 0f, 0f);
         }
     }
