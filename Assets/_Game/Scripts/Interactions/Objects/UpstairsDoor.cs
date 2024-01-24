@@ -27,7 +27,7 @@ namespace ER
             }
         }
 
-        public override void OnClick()
+        public override void OnClick(InteractionContext context)
         {
             Cursor.lockState = CursorLockMode.None;
             _upstairsRiddleUI.SetActive(true);

@@ -18,6 +18,8 @@ namespace ER
 
         [SerializeField] private List<GameObject> _players = new List<GameObject>();
 
+        private const string DOOR = "The door is closed... How to get out?";
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -32,18 +34,27 @@ namespace ER
             }
         }
 
-        public override void OnClick()
+        public override void OnClick(InteractionContext context)
         {
-            foreach (var player in _players)
+            if (context.playerController.GetInventory().GetItems().Contains(ItemRegister.Instance.GetItem(Item.ItemType.DoorKey)))
             {
-                Debug.Log("SetPos" + player.GetComponent<PlayerNetworkController>().IsHost);
+                context.playerController.PlayerCanUseInput(false);
 
-                player.transform.position = new Vector3(20.0f, 7.57f, -3.1f);
-                player.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
+                foreach (var player in _players)
+                {
+                    Debug.Log("SetPos" + player.GetComponent<PlayerNetworkController>().IsHost);
+
+                    player.transform.position = new Vector3(20.0f, 7.57f, -3.1f);
+                    player.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
+                }
+
+                _doorAnimator.SetBool(ANIMATION_VARIABLE, true);
+                _handleAnimator.SetBool(ANIMATION_VARIABLE, true);
             }
-
-            _doorAnimator.SetBool(ANIMATION_VARIABLE, true);
-            _handleAnimator.SetBool(ANIMATION_VARIABLE, true);
+            else
+            {
+                StartCoroutine(context.interactionManager.ShowTextMessage(DOOR));
+            }
         }
 
         public override void OnHover()

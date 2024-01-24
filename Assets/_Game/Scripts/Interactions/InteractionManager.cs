@@ -17,10 +17,7 @@ namespace ER
         private RaycastHit _hit = new RaycastHit();
         private GameObject _lastHitObj;
 
-        //Texts to write
         private const string NEW_ITEM_TEXT = "Added new item";
-        private const string DOOR = "The door is closed... How to get out?";
-        private const string EMPTY_CHEST = "The chest is empty";
 
         private void Update()
         {
@@ -73,32 +70,12 @@ namespace ER
                 if (!EventSystem.current.IsPointerOverGameObject()
                 && Physics.Raycast(_ray, out _hit))
                 {
+                    InteractionContext context = new InteractionContext(GetComponentInParent<PlayerController>(), true, this);
+
                     WorldItem worldItem = _hit.transform.GetComponent<WorldItem>();
                     if (worldItem != null)
                     {
-                        GetComponentInParent<PlayerController>().GetInventory().Add(worldItem.GetItemType());
                         StartCoroutine(ShowTextMessage(NEW_ITEM_TEXT));
-                    }
-
-                    GarageDoor garageDoor = _hit.transform.GetComponent<GarageDoor>();
-                    if(garageDoor != null)
-                    {
-                        if (GetComponentInParent<PlayerController>().GetInventory().GetItems().Contains(ItemRegister.Instance.GetItem(Item.ItemType.DoorKey)))
-                        {
-                            GetComponentInParent<PlayerController>().PlayerCanUseInput(false);
-                            garageDoor.OnClick();
-                        }
-                        else
-                        {
-                            StartCoroutine(ShowTextMessage(DOOR));
-                            canPerform = false;
-                        }
-                    }
-
-                    TreasureChest treasureChest = _hit.transform.GetComponent<TreasureChest>();
-                    if (treasureChest != null)
-                    {
-                        StartCoroutine(ShowTextMessage(EMPTY_CHEST));
                     }
 
                     InteractableObject interactableObject = _hit.transform.GetComponent<InteractableObject>();
@@ -107,15 +84,14 @@ namespace ER
                     {
                         if(canPerform)
                         {
-                            interactableObject.OnClick();
-                            Debug.Log(canPerform + "Click");
+                            interactableObject.OnClick(context);
                         }     
                     }
                 }
             }
         }
 
-        private IEnumerator ShowTextMessage(string message)
+        public IEnumerator ShowTextMessage(string message)
         {
             _textMessage.text = message;
 

@@ -1,4 +1,6 @@
+using NUnit.Framework.Internal.Execution;
 using UnityEngine;
+using System.Collections;
 
 namespace ER
 {
@@ -12,8 +14,9 @@ namespace ER
             _renderer = GetComponent<MeshRenderer>();
         }
 
-        public override void OnClick()
+        public override void OnClick(InteractionContext context)
         {
+            context.playerController.GetInventory().Add(_itemType);
             Destroy(this.gameObject);
         }
 

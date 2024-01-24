@@ -7,15 +7,16 @@ namespace ER
     public class TreasureChest : InteractableObject
     {
         private MeshRenderer _renderer;
+        private const string EMPTY_CHEST = "The chest is empty";
 
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
         }
 
-        public override void OnClick()
+        public override void OnClick(InteractionContext context)
         {
-            Debug.Log("On Click");
+            StartCoroutine(context.interactionManager.ShowTextMessage(EMPTY_CHEST));
         }
 
         public override void OnHover()
