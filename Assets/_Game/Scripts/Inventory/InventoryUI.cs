@@ -11,6 +11,9 @@ namespace ER
         [SerializeField] private Button _arrowLeft;
         [SerializeField] private Button _arrowRight;
 
+        [SerializeField] private Sprite[] _activearrows = new Sprite[2];
+        [SerializeField] private Sprite[] _desactivearrows = new Sprite[2];
+
         private int _startOfChecking = 0;
         private int _endOfChecking = 0;
 
@@ -34,6 +37,9 @@ namespace ER
 
             _arrowLeft.onClick.AddListener(OnArrowLeftClick);
             _arrowRight.onClick.AddListener(OnArrowRightClick);
+
+            _arrowLeft.GetComponent<Image>().sprite = _desactivearrows[0];
+            _arrowRight.GetComponent<Image>().sprite= _desactivearrows[1];
         }
 
         private void UpdateInventoryUI(List<Item> items)
@@ -53,6 +59,25 @@ namespace ER
                 }
 
                 int j = 0;
+
+                if(_startOfChecking == 0)
+                {
+                    _arrowLeft.GetComponent<Image>().sprite = _desactivearrows[0];
+                }
+                else
+                {
+                    _arrowLeft.GetComponent<Image>().sprite = _activearrows[0];
+                }
+
+                if (_inventorySize > 10 && _endOfChecking < _inventorySize)
+                {
+                    _arrowRight.GetComponent<Image>().sprite = _activearrows[1];
+                }
+                else
+                {
+                    _arrowRight.GetComponent<Image>().sprite = _desactivearrows[1];
+                }
+
                 for (int i = _startOfChecking; i < _endOfChecking; i++, j++)
                 {
                     InventorySlot slot = _slots[j];

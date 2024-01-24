@@ -1585,6 +1585,12 @@ MonoBehaviour:
   _slots: []
   _arrowLeft: {fileID: 2125806945138716564}
   _arrowRight: {fileID: 4088372790575098722}
+  _activearrows:
+  - {fileID: -341869462, guid: 05d9930c37e7de148a105d0ddaa8a377, type: 3}
+  - {fileID: 277949099, guid: aa0a523747229b6468cfdd8f46b86b24, type: 3}
+  _desactivearrows:
+  - {fileID: -753007109, guid: 84e76dc77aa91234ab6dabd28cca0472, type: 3}
+  - {fileID: -1533071673, guid: b733947c83c3122469b0e83a4d95e367, type: 3}
 --- !u!1 &8999891214179261439
 GameObject:
   m_ObjectHideFlags: 0
