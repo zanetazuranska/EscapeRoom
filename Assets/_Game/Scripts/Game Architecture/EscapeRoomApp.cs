@@ -16,6 +16,8 @@ namespace ER
         [SerializeField] private Transform _winPrefab;
         private Transform _winTransform;
 
+        [SerializeField] private ApplicationFlowController _applicationFlowController;
+
         public enum StartAs
         {
             Host = 0,
@@ -48,6 +50,11 @@ namespace ER
         {
             _winTransform = Instantiate(_winPrefab);
             _winTransform.GetComponent<NetworkObject>().Spawn(true);
+        }
+
+        public ApplicationFlowController GetAplicationFlowController()
+        {
+            return _applicationFlowController;
         }
 
     }
