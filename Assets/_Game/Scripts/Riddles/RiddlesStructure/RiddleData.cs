@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ER.Riddle
 {
-    public class RiddleData
+    public class RiddleData: ScriptableObject
     {
-        public List<object> riddleAnswer = new List<object>();
-        public List<object> currentRiddleValues = new List<object>();
+        public int id;
+
+        public List<string> proposedAnswer = new List<string>();
     }
 }
 

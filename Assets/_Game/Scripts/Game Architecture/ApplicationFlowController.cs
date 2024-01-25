@@ -1,5 +1,7 @@
 using ER.Riddle;
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Events;
 
 namespace ER
 {
@@ -7,7 +9,8 @@ namespace ER
     {
         private StateMachine _stateMachine = new StateMachine();
 
-        private RiddleController _currentRiddleController;
+        private List<RiddleController> _riddleControllers = new List<RiddleController>();
+        public UnityEvent<RiddleController> OnAddRiddleController = new UnityEvent<RiddleController>();
 
         private void Start()
         {
@@ -22,14 +25,21 @@ namespace ER
             _stateMachine.Update();
         }
 
-        public void SetCurrentRiddleController(RiddleController riddleController)
+        public void AddRiddleController(RiddleController riddleController)
         {
-            _currentRiddleController = riddleController;
+            _riddleControllers.Add(riddleController);
+
+            OnAddRiddleController.Invoke(riddleController);
         }
 
-        public RiddleController GetCurrentRiddleController()
+        public List<RiddleController> GetRiddleControllers()
+        { 
+            return _riddleControllers;
+        }
+
+        public void RemoveRiddleController(RiddleController controller)
         {
-            return _currentRiddleController;
+            _riddleControllers.Remove(controller);
         }
     }
 }

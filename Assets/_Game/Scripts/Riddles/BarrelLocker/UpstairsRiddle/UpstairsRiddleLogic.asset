@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae2cb9fb4b7d9ef4096ac188bd471dad, type: 3}
+  m_Name: UpstairsRiddleLogic
+  m_EditorClassIdentifier: 
+  _riddleType: 1
+  _riddleData: {fileID: 11400000, guid: 086f2847095509e49a10218640d53acf, type: 2}
+  _barrelLockerData: {fileID: 11400000, guid: 086f2847095509e49a10218640d53acf, type: 2}

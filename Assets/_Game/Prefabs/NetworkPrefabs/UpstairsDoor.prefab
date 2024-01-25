@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4245037263711047210
+--- !u!1 &6448084080801287341
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9203848323082685947}
-  - component: {fileID: 6216236006506983178}
-  - component: {fileID: 6187149097118884039}
-  - component: {fileID: 6349245360970827314}
-  - component: {fileID: 2363749157274174931}
-  - component: {fileID: 662463263906122454}
+  - component: {fileID: 961565484771942771}
+  - component: {fileID: 345962417125918892}
+  - component: {fileID: 1021358124098764610}
+  - component: {fileID: 264395917550486046}
+  - component: {fileID: 4850792522545654430}
+  - component: {fileID: 1770889050535440075}
   m_Layer: 0
   m_Name: UpstairsDoor
   m_TagString: Upstairs
@@ -21,36 +21,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9203848323082685947
+--- !u!4 &961565484771942771
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4245037263711047210}
+  m_GameObject: {fileID: 6448084080801287341}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 28.912, y: 67.64, z: -44.23}
   m_LocalScale: {x: 1, y: 35, z: 15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6216236006506983178
+--- !u!33 &345962417125918892
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4245037263711047210}
+  m_GameObject: {fileID: 6448084080801287341}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6187149097118884039
+--- !u!23 &1021358124098764610
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4245037263711047210}
+  m_GameObject: {fileID: 6448084080801287341}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -87,13 +87,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6349245360970827314
+--- !u!65 &264395917550486046
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4245037263711047210}
+  m_GameObject: {fileID: 6448084080801287341}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -108,19 +108,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2363749157274174931
+--- !u!114 &4850792522545654430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4245037263711047210}
+  m_GameObject: {fileID: 6448084080801287341}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1282120411
+  GlobalObjectIdHash: 1074514014
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -128,17 +128,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &662463263906122454
+--- !u!114 &1770889050535440075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4245037263711047210}
+  m_GameObject: {fileID: 6448084080801287341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a01254b388cb546ac8fce13c7226f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bcea853a7026db49a73eedd443d6e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upstairsRiddleUI: {fileID: 0}
-  _exit: {fileID: 0}
+  OnClickEvent:
+    m_PersistentCalls:
+      m_Calls: []

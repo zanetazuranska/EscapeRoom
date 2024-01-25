@@ -157,6 +157,7 @@ MonoBehaviour:
       m_Calls: []
   _winPrefab: {fileID: 6901520858391762322, guid: 2d6ec423567255c4ca5923d001547cf7,
     type: 3}
+  _applicationFlowController: {fileID: 99753617}
   startAs: 0
 --- !u!4 &43444700
 Transform:
