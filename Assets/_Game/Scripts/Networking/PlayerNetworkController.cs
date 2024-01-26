@@ -7,7 +7,7 @@ namespace ER
     {
         [SerializeField] private GameObject _canvas;
 
-        private Vector3 _spawnPosition = new Vector3(-10.9f, 6.57f, -13.47f);
+        private Vector3 _spawnPosition = new Vector3(-10.9f, 7.7f, -13.47f);
 
         public override void OnNetworkSpawn()
         {

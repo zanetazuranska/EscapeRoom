@@ -14,9 +14,9 @@ namespace ER
         [SerializeField] private Animator _doorAnimator;
         [SerializeField] private Animator _handleAnimator;
 
-        private const string ANIMATION_VARIABLE = "CanOpen";
+        [SerializeField] private PlayerNetworkSetPosition _playerNetworkSetPosition;
 
-        [SerializeField] private List<GameObject> _players = new List<GameObject>();
+        private const string ANIMATION_VARIABLE = "CanOpen";
 
         private const string DOOR = "The door is closed... How to get out?";
 
@@ -40,14 +40,15 @@ namespace ER
             {
                 context.playerController.PlayerCanUseInput(false);
 
-                foreach (var player in _players)
+                _playerNetworkSetPosition.SetPlayerNetworkController(context.playerController.gameObject.GetComponent<PlayerNetworkController>());
+
+                _playerNetworkSetPosition.SetPositionClientRpc();
+
+                if(context.playerController.gameObject.GetComponent<PlayerNetworkController>().IsClient)
                 {
-                    Debug.Log("SetPos" + player.GetComponent<PlayerNetworkController>().IsHost);
-
-                    player.transform.position = new Vector3(20.0f, 7.57f, -3.1f);
-                    player.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
+                    _playerNetworkSetPosition.SetPositionServerRpc();
                 }
-
+                
                 _doorAnimator.SetBool(ANIMATION_VARIABLE, true);
                 _handleAnimator.SetBool(ANIMATION_VARIABLE, true);
             }
@@ -69,7 +70,7 @@ namespace ER
 
         public void RegisterPlayer(GameObject player)
         {
-            _players.Add(player);
+            _playerNetworkSetPosition.RegisterPlayer(player);
         }
     }
 }

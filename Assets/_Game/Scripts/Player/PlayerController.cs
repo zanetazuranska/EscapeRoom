@@ -181,5 +181,11 @@ namespace ER
         {
             _isInventoryActive = !input;
         }
+
+        public void DesactiveInventory()
+        {
+            _inventoryObjects[0].SetActive(false);
+            _inventoryObjects[1].SetActive(false);
+        }
     }
 }
