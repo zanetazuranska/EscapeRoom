@@ -22,8 +22,6 @@ namespace ER
 
         private void Awake()
         {
-            _renderer = GetComponent<MeshRenderer>();
-
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
@@ -32,6 +30,9 @@ namespace ER
             {
                 Instance = this;
             }
+
+            _renderer = GetComponent<MeshRenderer>();
+            _playerNetworkSetPosition.OnSetPosition.AddListener(OnPlayerSetPosition);
         }
 
         public override void OnClick(InteractionContext context)
@@ -48,9 +49,6 @@ namespace ER
                 {
                     _playerNetworkSetPosition.SetPositionServerRpc();
                 }
-                
-                _doorAnimator.SetBool(ANIMATION_VARIABLE, true);
-                _handleAnimator.SetBool(ANIMATION_VARIABLE, true);
             }
             else
             {
@@ -71,6 +69,17 @@ namespace ER
         public void RegisterPlayer(GameObject player)
         {
             _playerNetworkSetPosition.RegisterPlayer(player);
+        }
+
+        private void OnPlayerSetPosition()
+        {
+            _doorAnimator.SetBool(ANIMATION_VARIABLE, true);
+            _handleAnimator.SetBool(ANIMATION_VARIABLE, true);
+        }
+
+        private void OnDestroy()
+        {
+            _playerNetworkSetPosition.OnSetPosition.RemoveListener(OnPlayerSetPosition);
         }
     }
 }
