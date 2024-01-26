@@ -12,6 +12,7 @@ namespace ER
             Riddle1Paper3 = 2,
             Riddle1Paper4 = 3,
             DoorKey = 4,
+            Axe = 5,
         }
 
         public ItemType itemType;

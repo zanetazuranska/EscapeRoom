@@ -204,6 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f48626c5898bff542a8d0b11d3d5d118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnAddRiddleController:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &99753618
 Transform:
   m_ObjectHideFlags: 0
@@ -888,6 +891,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7fa20742a5b68d44c9982f781adac71e, type: 2}
   - {fileID: 11400000, guid: fe2e3560c579e27488d2ff308b45c71e, type: 2}
   - {fileID: 11400000, guid: b9642a251d3b65041afb5576cb32cf5d, type: 2}
+  - {fileID: 11400000, guid: ac72099123cc30b4a9f6c2cdd31d9b27, type: 2}
 --- !u!4 &1930249060
 Transform:
   m_ObjectHideFlags: 0
