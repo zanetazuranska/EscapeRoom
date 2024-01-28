@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297da55f4720c854a9993fc682bb88e9, type: 3}
+  m_Name: MagneticCardData
+  m_EditorClassIdentifier: 
+  id: 1
+  proposedAnswer: []
+  PuzzleAnswer:
+  - ValueSet: f5ffffff2a00000014000000f5ffffff
+  - ValueSet: f1ffffff2d00000032000000f0ffffff
+  PuzzleProposedAnswer:
+  - ValueSet: 00000000000000000000000000000000
+  - ValueSet: 00000000000000000000000000000000

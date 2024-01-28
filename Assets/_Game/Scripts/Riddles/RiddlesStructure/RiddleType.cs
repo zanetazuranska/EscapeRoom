@@ -6,6 +6,7 @@ namespace ER.Riddle
         {
             None = 0,
             BarrelLocker = 1,
+            MagneticCard = 2,
         }
     }
 }

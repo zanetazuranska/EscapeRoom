@@ -21,6 +21,10 @@ namespace ER.Riddle.UI
         [SerializeField] private Sprite[] _levelTestSprites = new Sprite[4];
         [SerializeField] private Image _levetTestImage;
 
+        [SerializeField] private Slider _slider;
+        private float _currentSkeletonKeyAngle1 = 0.5f;
+        private float _currentSkeletonKeyAngle2 = 0.5f;
+
         private void Awake()
         {
             _exit.onClick.AddListener(SetDesactiveUI);
@@ -31,6 +35,8 @@ namespace ER.Riddle.UI
 
             _skeletonKeyButtons[0].onClick.AddListener(SkeletonKey1);
             _skeletonKeyButtons[1].onClick.AddListener(SkeletonKey2);
+
+            _slider.onValueChanged.AddListener(SetRotation);
         }
 
         private void SetActiveUI()
@@ -107,6 +113,57 @@ namespace ER.Riddle.UI
             gameObject.SetActive(false);
         }
 
+        private void SetRotation(float value)
+        {
+            GameObject gameObject = _skeletonKeyButtons[_currentActiveSkeletonKey - 1].gameObject;
+
+            if (_currentActiveSkeletonKey == 1)
+            {
+                _currentSkeletonKeyAngle1 = value;
+            }
+            else
+            {
+                _currentSkeletonKeyAngle2 = value;
+            }
+
+            if (value == 0.5f)
+            {
+                gameObject.transform.eulerAngles = Vector3.zero;
+            }
+            else if (value < 0.5f)
+            {
+                value = 0.5f - value;
+                int angle = (int)(value / 0.01d);
+
+                if (_currentActiveSkeletonKey == 1)
+                {
+                    gameObject.transform.eulerAngles = new Vector3(0, 0, angle);
+                    _currentSkeletonKeyAngle1 = angle;
+                }
+                else
+                {
+                    gameObject.transform.eulerAngles = new Vector3(0, 0, -angle);
+                    _currentSkeletonKeyAngle2 = -angle;
+                }
+            }
+            else
+            {
+                value = value - 0.5f;
+                int angle = (int)(value / 0.01d);
+
+                if (_currentActiveSkeletonKey == 1)
+                {
+                    gameObject.transform.eulerAngles = new Vector3(0, 0, -angle);
+                    _currentSkeletonKeyAngle1 = -angle;
+                }
+                else
+                {
+                    gameObject.transform.eulerAngles = new Vector3(0, 0, angle);
+                    _currentSkeletonKeyAngle2 = angle;
+                }
+            }
+        }
+
         private void OnDestroy()
         {
             _exit.onClick.RemoveListener(SetDesactiveUI);
@@ -114,6 +171,8 @@ namespace ER.Riddle.UI
 
             _skeletonKeyButtons[0].onClick.RemoveListener(SkeletonKey1);
             _skeletonKeyButtons[1].onClick.RemoveListener(SkeletonKey2);
+
+            _slider.onValueChanged.RemoveListener(SetRotation);
         }
     }
 }
