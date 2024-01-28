@@ -28,11 +28,6 @@ namespace ER.Riddle
         {
             _renderer.materials[1].SetFloat("_Scale", 0f);
         }
-
-        public void ChangeValueDown(int barrelId)
-        {
-
-        }
     }
 
 }

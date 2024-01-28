@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ namespace ER.Riddle.UI
         private float _currentSkeletonKeyAngle1 = 0.5f;
         private float _currentSkeletonKeyAngle2 = 0.5f;
 
+        private Transform _networkObject;
+
         private void Awake()
         {
             _exit.onClick.AddListener(SetDesactiveUI);
@@ -37,6 +40,44 @@ namespace ER.Riddle.UI
             _skeletonKeyButtons[1].onClick.AddListener(SkeletonKey2);
 
             _slider.onValueChanged.AddListener(SetRotation);
+
+            EscapeRoomApp.Instance.GetAplicationFlowController().OnAddRiddleController.AddListener(OnAddRiddleController);
+        }
+
+        private void OnAddRiddleController(RiddleController riddleController)
+        {
+            if (riddleController.GetERiddleType() == RiddleType.ERiddleType.MagneticCard)
+            {
+                EscapeRoomApp.Instance.GetAplicationFlowController().OnAddRiddleController.RemoveListener(OnAddRiddleController);
+
+                SetRiddleController(riddleController);
+
+                riddleController.OnObjectSpawn.AddListener(OnNetworkObjectSpawn);
+            }
+        }
+
+        private void OnNetworkObjectSpawn(Transform transform)
+        {
+            if (GetRiddleController() == null)
+            {
+                foreach (RiddleController riddleController in EscapeRoomApp.Instance.GetAplicationFlowController().GetRiddleControllers())
+                {
+                    if(riddleController.GetERiddleType() == RiddleType.ERiddleType.MagneticCard)
+                    {
+                        SetRiddleController(riddleController);
+                    }
+                }
+            }
+
+            if (transform == null)
+            {
+                if (GameObject.FindFirstObjectByType<ER.Padlock>() != null)
+                    transform = GameObject.FindFirstObjectByType<ER.Padlock>().transform;
+            }
+
+            transform.gameObject.GetComponent<Padlock>().OnClickEvent.AddListener(SetActiveUI);
+
+            _networkObject = transform;
         }
 
         private void SetActiveUI()
@@ -173,6 +214,10 @@ namespace ER.Riddle.UI
             _skeletonKeyButtons[1].onClick.RemoveListener(SkeletonKey2);
 
             _slider.onValueChanged.RemoveListener(SetRotation);
+
+            EscapeRoomApp.Instance.GetAplicationFlowController().OnAddRiddleController.RemoveListener(OnAddRiddleController);
+
+            _networkObject.gameObject.GetComponent<Padlock>().OnClickEvent.RemoveListener(SetActiveUI);
         }
     }
 }

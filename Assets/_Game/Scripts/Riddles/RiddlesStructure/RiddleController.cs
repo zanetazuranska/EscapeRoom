@@ -9,14 +9,15 @@ namespace ER.Riddle
     {
         [SerializeField] private RiddleLogic _riddleLogic;
         [SerializeField] private Transform _riddleActivateObjPrefab;
+        [SerializeField] private bool _spawnNetworkObject = true;
         private Transform _riddleActivateObj;
 
         public UnityEvent<Transform> OnObjectSpawn = new UnityEvent<Transform>();
 
         private void Awake()
         {
-            EscapeRoomApp.Instance.OnHostSpawned.AddListener(OnHostSpawned);
             EscapeRoomApp.Instance.OnClientSpawned.AddListener(OnClientSpawned);
+            EscapeRoomApp.Instance.OnHostSpawned.AddListener(OnHostSpawned);
         }
 
         private void Start()
@@ -28,12 +29,17 @@ namespace ER.Riddle
         {
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
-            _riddleActivateObj = Instantiate(_riddleActivateObjPrefab, this.gameObject.transform);
-            _riddleActivateObj.GetComponent<NetworkObject>().Spawn(true);
+            if(_spawnNetworkObject)
+            {
+                _riddleActivateObj = Instantiate(_riddleActivateObjPrefab, this.gameObject.transform);
+                _riddleActivateObj.GetComponent<NetworkObject>().Spawn(true);
+            }
+            else
+            {
+                _riddleActivateObj = _riddleActivateObjPrefab;
+            }
 
             OnObjectSpawn.Invoke(_riddleActivateObj);
-
-            EscapeRoomApp.Instance.OnHostSpawned.RemoveListener(OnHostSpawned);
         }
 
         private void OnClientSpawned()
@@ -41,7 +47,6 @@ namespace ER.Riddle
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
             OnObjectSpawn.Invoke(_riddleActivateObj);
-            EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
         }
 
         public bool IsAnswerCorrect(RiddleData riddleData)
@@ -93,6 +98,8 @@ namespace ER.Riddle
             base.OnDestroy();
 
             EscapeRoomApp.Instance.GetAplicationFlowController().RemoveRiddleController(this);
+            EscapeRoomApp.Instance.OnHostSpawned.RemoveListener(OnHostSpawned);
+            EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
         }
     }
 }

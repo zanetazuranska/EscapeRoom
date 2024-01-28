@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ER
 {
@@ -9,6 +10,8 @@ namespace ER
         private MeshRenderer _renderer;
         private const string PADLOCK = "Have you ever experienced a break-in?";
 
+        public UnityEvent OnClickEvent = new UnityEvent();
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -16,7 +19,18 @@ namespace ER
 
         public override void OnClick(InteractionContext context)
         {
-            StartCoroutine(context.interactionManager.ShowTextMessage(PADLOCK));
+            List<Item> items = context.playerController.GetInventory().GetItems();
+            Item spoon = ItemRegister.Instance.GetItem(Item.ItemType.Spoon);
+            Item wire = ItemRegister.Instance.GetItem(Item.ItemType.Wire);
+
+            if (items.Contains(spoon) && items.Contains(wire))
+            {
+                OnClickEvent.Invoke();
+            }
+            else
+            {
+                StartCoroutine(context.interactionManager.ShowTextMessage(PADLOCK));
+            }
         }
 
         public override void OnHover()

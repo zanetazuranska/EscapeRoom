@@ -9,9 +9,21 @@ namespace ER.Riddle
     {
         [SerializeField] private MagneticCardData _magneticCardData;
 
+        public const int ERROR_TOLERANCE = 2;
+
         public override void LogicInitialize()
         {
             SetRiddleData(_magneticCardData);
+
+            for (int i = 0; i < _magneticCardData.PuzzleAnswer.Count; i++)
+            {
+                MagneticCardData.SkeletonKey skeletonKeyProposedAnswer = _magneticCardData.PuzzleProposedAnswer[i];
+
+                for (int j = 0; j < skeletonKeyProposedAnswer.ValueSet.Length; j++)
+                {
+                    skeletonKeyProposedAnswer.ValueSet[j] = 0;
+                }
+            }
         }
 
         public override bool CheckAnswer(RiddleData riddleData)
@@ -21,7 +33,7 @@ namespace ER.Riddle
                 MagneticCardData.SkeletonKey skeletonKeyAnswer = _magneticCardData.PuzzleAnswer[i];
                 MagneticCardData.SkeletonKey skeletonKeyProposedAnswer = _magneticCardData.PuzzleProposedAnswer[i];
 
-                for (int j = 0; j < skeletonKeyAnswer.ValueSet.Length; i++)
+                for (int j = 0; j < skeletonKeyAnswer.ValueSet.Length; j++)
                 {
                     if (skeletonKeyAnswer.ValueSet[j] != skeletonKeyProposedAnswer.ValueSet[j])
                         return false;

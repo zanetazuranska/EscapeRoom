@@ -27,7 +27,6 @@ namespace ER
             if (IsClient)
             {
                 EscapeRoomApp.Instance.OnClientSpawned.Invoke();
-                Debug.Log("Client spawn");
             }
 
             GarageDoor.Instance.RegisterPlayer(this.gameObject);

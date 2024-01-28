@@ -16,7 +16,7 @@ namespace ER.Riddle.UI
         [SerializeField] private GameObject _ui;
         [SerializeField] private Button _exit;
 
-        private Transform _netrowkObject;
+        private Transform _networkObject;
 
         private void Awake()
         {
@@ -58,7 +58,7 @@ namespace ER.Riddle.UI
 
             transform.gameObject.GetComponent<UpstairsDoor>().OnClickEvent.AddListener(SetActiveUI);
 
-            _netrowkObject = transform;
+            _networkObject = transform;
         }
 
         private void SetButton()
@@ -193,7 +193,7 @@ namespace ER.Riddle.UI
         {
             SetDesactiveUI();
 
-            _netrowkObject.gameObject.GetComponent<UpstairsDoor>().OnClickEvent.RemoveListener(SetActiveUI);
+            _networkObject.gameObject.GetComponent<UpstairsDoor>().OnClickEvent.RemoveListener(SetActiveUI);
             _exit.onClick.RemoveListener(SetDesactiveUI);
             Destroy(this);
         }

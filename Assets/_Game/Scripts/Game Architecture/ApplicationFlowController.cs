@@ -27,6 +27,8 @@ namespace ER
 
         public void AddRiddleController(RiddleController riddleController)
         {
+            Debug.Log(riddleController.GetERiddleType().ToString());
+
             _riddleControllers.Add(riddleController);
 
             OnAddRiddleController.Invoke(riddleController);
