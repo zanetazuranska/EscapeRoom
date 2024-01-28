@@ -1,41 +1,44 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MenuUI : MonoBehaviour
+namespace ER
 {
-    public static MenuUI Instance { get; private set; }
-
-    public UnityEvent OnStartClick = new UnityEvent();
-
-    private void Awake()
+    public class MenuUI : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static MenuUI Instance { get; private set; }
+
+        public UnityEvent OnStartClick = new UnityEvent();
+
+        private void Awake()
         {
-            Destroy(this);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
-        else
+
+        public void StartButton()
         {
-            Instance = this;
+            OnStartClick.Invoke();
         }
-    }
 
-    public void StartButton()
-    {
-        OnStartClick.Invoke();
-    }
+        public void Options()
+        {
+            Debug.LogError("Options button not set");
+        }
 
-    public void Options()
-    {
-        Debug.LogError("Options button not set");
-    }
+        public void Credits()
+        {
+            Debug.LogError("Credits button not set");
+        }
 
-    public void Credits()
-    {
-        Debug.LogError("Credits button not set");
-    }
-
-    public void Exit()
-    {
-        Application.Quit();
+        public void Exit()
+        {
+            Application.Quit();
+        }
     }
 }

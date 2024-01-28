@@ -4,117 +4,182 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+namespace ER
 {
-    [SerializeField] private PlayerNetworkController _playerNetworkController;
-
-    CharacterController _characterController;
-    public enum MovementState
+    public class PlayerController : MonoBehaviour
     {
-        Standing = 0,
-        Walking = 1,
-    }
+        [SerializeField] private PlayerNetworkController _playerNetworkController;
 
-    public List<MovementState> _movementStates = new List<MovementState>();
+        CharacterController _characterController;
 
-    [Header("Movement")]
-    [SerializeField][Range(0f, 20f)] private float _walkSpeed = 10f;
+        private Inventory _inventory = new Inventory();
 
-    #region Movement variables
+        [SerializeField] private List<Item> _items = new List<Item>();
 
-    private PlayerInput _playerInput;
+        [SerializeField] private GameObject[] _inventoryObjects = new GameObject[2];
+        private bool _isInventoryActive = false;
 
-    private bool _isStanding = false;
-    private bool _isWalkingRL = false;
-    private bool _isWalkingUD = false;
-
-    private Vector2 _moveDirection;
-    #endregion
-
-    #region Physics
-
-    [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private GameObject _groundCheck;
-    private float _groundDistance = 0.4f;
-    private float _gravity = -9.81f;
-    private Vector3 _velocity;
-
-    #endregion
-
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-
-        _playerInput = new PlayerInput();
-        _playerInput.Movement.Enable();
-
-        _playerInput.Movement.WalkRL.performed += _ => _isWalkingRL = true;
-        _playerInput.Movement.WalkRL.canceled += _ => _isWalkingRL = false;
-
-        _playerInput.Movement.WalkUD.performed += _ => _isWalkingUD = true;
-        _playerInput.Movement.WalkUD.canceled += _ => _isWalkingUD = false;
-    }
-
-    void FixedUpdate()
-    {
-        if (!_playerNetworkController.IsOwner) return;
-
-        CalculateState();
-        CalculateGravity();
-        Move();
-    }
-
-    private void CalculateGravity()
-    {
-        if (GroundCheck() && _velocity.y < 0)
+        public enum MovementState
         {
-            _velocity.y = -2f;
+            Standing = 0,
+            Walking = 1,
         }
 
-        _velocity.y += _gravity * Time.deltaTime;
-        _characterController.Move(_velocity * Time.deltaTime);
-    }
+        public List<MovementState> _movementStates = new List<MovementState>();
 
-    private void Move()
-    {
-        _moveDirection.x = _playerInput.Movement.WalkRL.ReadValue<float>();
-        _moveDirection.y = _playerInput.Movement.WalkUD.ReadValue<float>();
+        [Header("Movement")]
+        [SerializeField][Range(0f, 20f)] private float _walkSpeed = 10f;
 
-        Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
-        _characterController.Move(move * _walkSpeed * Time.deltaTime);
-    }
+        #region Movement variables
 
-    private void CalculateState()
-    {
+        private PlayerInput _playerInput;
 
-        if (_isWalkingRL || _isWalkingUD)
+        private bool _isStanding = false;
+        private bool _isWalkingRL = false;
+        private bool _isWalkingUD = false;
+
+        private Vector2 _moveDirection;
+        #endregion
+
+        #region Physics
+
+        [SerializeField] private LayerMask _groundMask;
+        [SerializeField] private GameObject _groundCheck;
+        private float _groundDistance = 0.4f;
+        private float _gravity = -9.81f;
+        private Vector3 _velocity;
+
+        #endregion
+
+        private void Awake()
         {
-            AddStateIfPossible(MovementState.Walking);
-            DeleteState(MovementState.Standing);
+            _characterController = GetComponent<CharacterController>();
+
+            _playerInput = new PlayerInput();
+            _playerInput.Movement.Enable();
+            _playerInput.Inventory.Enable();
+
+            _playerInput.Movement.WalkRL.performed += _ => _isWalkingRL = true;
+            _playerInput.Movement.WalkRL.canceled += _ => _isWalkingRL = false;
+
+            _playerInput.Movement.WalkUD.performed += _ => _isWalkingUD = true;
+            _playerInput.Movement.WalkUD.canceled += _ => _isWalkingUD = false;
+
+            _playerInput.Inventory.ActiveDesactiv.performed += ActiveOrDesactivInventory;
         }
-        else
+
+        private void FixedUpdate()
         {
-            AddStateIfPossible(MovementState.Standing);
-            DeleteState(MovementState.Walking);
+            if (!_playerNetworkController.IsOwner)
+            {
+                return;
+            }
+
+            _items = _inventory.GetItems();
+
+            if (_isInventoryActive == true) return;
+
+            CalculateState();
+            CalculateGravity();
+            Move();
         }
-    }
 
-    private void AddStateIfPossible(MovementState state)
-    {
-        if (_movementStates.Contains(state)) return;
-        else _movementStates.Add(state);
-    }
-
-    private void DeleteState(MovementState state)
-    {
-        if (_movementStates.Contains(state))
+        private void CalculateGravity()
         {
-            _movementStates.Remove(state);
-        }
-    }
+            if (GroundCheck() && _velocity.y < 0)
+            {
+                _velocity.y = -2f;
+            }
 
-    private bool GroundCheck()
-    {
-        return Physics.CheckSphere(_groundCheck.transform.position, _groundDistance, _groundMask);
+            _velocity.y += _gravity * Time.deltaTime;
+            _characterController.Move(_velocity * Time.deltaTime);
+        }
+
+        private void Move()
+        {
+            _moveDirection.x = _playerInput.Movement.WalkRL.ReadValue<float>();
+            _moveDirection.y = _playerInput.Movement.WalkUD.ReadValue<float>();
+
+            Vector3 move = transform.right * _moveDirection.x + transform.forward * _moveDirection.y;
+            _characterController.Move(move * _walkSpeed * Time.deltaTime);
+        }
+
+        private void CalculateState()
+        {
+
+            if (_isWalkingRL || _isWalkingUD)
+            {
+                AddStateIfPossible(MovementState.Walking);
+                DeleteState(MovementState.Standing);
+            }
+            else
+            {
+                AddStateIfPossible(MovementState.Standing);
+                DeleteState(MovementState.Walking);
+            }
+        }
+
+        private void AddStateIfPossible(MovementState state)
+        {
+            if (_movementStates.Contains(state)) return;
+            else _movementStates.Add(state);
+        }
+
+        private void DeleteState(MovementState state)
+        {
+            if (_movementStates.Contains(state))
+            {
+                _movementStates.Remove(state);
+            }
+        }
+
+        private bool GroundCheck()
+        {
+            return Physics.CheckSphere(_groundCheck.transform.position, _groundDistance, _groundMask);
+        }
+
+        public Inventory GetInventory()
+        {
+            return _inventory;
+        }
+
+        private void ActiveOrDesactivInventory(InputAction.CallbackContext context)
+        {
+            if (!_playerNetworkController.IsOwner) return;
+
+            if (_inventoryObjects[0].activeSelf == true)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                _isInventoryActive = false;
+
+                _inventoryObjects[0].SetActive(false);
+                _inventoryObjects[1].SetActive(false);
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                _isInventoryActive = true;
+
+                _inventoryObjects[0].SetActive(true);
+                _inventoryObjects[1].SetActive(true);
+
+                _inventory.OnInventoryChange.Invoke(_inventory.GetItems());
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _playerInput.Inventory.ActiveDesactiv.performed -= ActiveOrDesactivInventory;
+        }
+
+        public bool GetIsIventoryActive()
+        {
+            return _isInventoryActive;
+        }
+
+        public void PlayerCanUseInput(bool input)
+        {
+            _isInventoryActive = !input;
+        }
     }
 }

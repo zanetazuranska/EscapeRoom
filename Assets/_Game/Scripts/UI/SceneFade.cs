@@ -1,26 +1,31 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SceneFade : MonoBehaviour
+namespace ER
 {
-    [SerializeField] private Animator _animator;
-
-    public void Out()
+    public class SceneFade : MonoBehaviour
     {
-        _animator.SetBool("Out", false);
+        [SerializeField] private Animator _animator;
 
-        OnOutAnimComplete.Invoke();
+        private const string ANIMATOR_BOOL_OUT = "Out";
+        private const string ANIMATOR_BOOL_IN = "In";
+
+        public void Out()
+        {
+            _animator.SetBool(ANIMATOR_BOOL_OUT, false);
+
+            OnOutAnimComplete.Invoke();
+        }
+
+        public void In()
+        {
+            _animator.SetBool(ANIMATOR_BOOL_IN, false);
+
+            OnInAnimComplete.Invoke();
+        }
+
+        public UnityEvent OnOutAnimComplete = new UnityEvent();
+        public UnityEvent OnInAnimComplete = new UnityEvent();
     }
-
-    public void In()
-    {
-        _animator.SetBool("In", false);
-
-        OnInAnimComplete.Invoke();
-    }
-
-    public UnityEvent OnOutAnimComplete = new UnityEvent();
-    public UnityEvent OnInAnimComplete = new UnityEvent();
-
 
 }

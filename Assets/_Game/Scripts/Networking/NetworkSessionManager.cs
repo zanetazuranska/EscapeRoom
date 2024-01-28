@@ -1,145 +1,153 @@
-using ER;
 using UnityEngine;
 using System.Collections.Generic;
-using static GameNetworkData;
 using Unity.Netcode.Transports.UTP;
-using Unity.VisualScripting;
+using static ER.GameNetworkData;
 
-public class NetworkSessionManager : MonoBehaviour
+namespace ER
 {
-    public static NetworkSessionManager Instance { get; private set; }
-
-    [SerializeField] private List<GameNetworkData> _gameNetworkDataList = new List<GameNetworkData>();
-
-    [SerializeField] private UnityTransport _unityTransport;
-
-    public enum DataValidationErrors
+    public class NetworkSessionManager : MonoBehaviour
     {
-        None = 0,
-        EmptyField = 1,
-        PortNumError = 2,
-        IPAddressError = 3,
-    }
+        public static NetworkSessionManager Instance { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
+        [SerializeField] private List<GameNetworkData> _gameNetworkDataList = new List<GameNetworkData>();
 
-    public DataValidationErrors AddGameNetworkData (ENetMode netMode, string portNum, string iPAddress, string playerName)
-    {
-        if(portNum.Length == 0 || iPAddress.Length == 0 || playerName.Length == 0)
+        [SerializeField] private UnityTransport _unityTransport;
+
+        public enum DataValidationErrors
         {
-            return DataValidationErrors.EmptyField;
+            None = 0,
+            EmptyField = 1,
+            PortNumError = 2,
+            IPAddressError = 3,
         }
 
-        var gameNetworkData = ScriptableObject.CreateInstance<GameNetworkData>();
-
-        gameNetworkData.netMode = netMode;
-        gameNetworkData.portNum = portNum;  
-
-        if(!PortNumDataValidation(portNum))
+        private void Awake()
         {
-            return DataValidationErrors.PortNumError;
-        }
-
-        gameNetworkData.iPAddress = iPAddress;
-
-        if (!IPAddressDataValidation(iPAddress))
-        {
-            return DataValidationErrors.IPAddressError;
-        }
-
-        gameNetworkData.playerName = playerName;
-
-        _gameNetworkDataList.Add(gameNetworkData);
-
-        //SetUnityTransport(portNum, iPAddress);
-
-        return DataValidationErrors.None;
-    }
-
-    private bool PortNumDataValidation(string portNum)
-    {
-        for(int i=0; i<portNum.Length; i++)
-        {
-            if (!(portNum[i] >=48 && portNum[i] <=57))
+            if (Instance != null && Instance != this)
             {
-                return false;
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
             }
         }
 
-        return true;
-    }
-
-    private bool IPAddressDataValidation(string iPAddress)
-    {
-        for (int i = 0; i < iPAddress.Length; i++)
+        public DataValidationErrors AddGameNetworkData(ENetMode netMode, string portNum, string iPAddress, string playerName)
         {
-            if (iPAddress[i] == ' ')
+            if (portNum.Length == 0 || iPAddress.Length == 0 || playerName.Length == 0)
             {
-                return false;
-            }
-        }
-
-        string[] splitValues = iPAddress.Split('.');
-
-        if(splitValues.Length != 4 )
-        {
-            return false;
-        }
-
-        for(int i=0; i<splitValues.Length; i++)
-        {
-            if (splitValues[i].Length > 3 || splitValues[i].Length < 1)
-            {
-                Debug.Log("Lenght 1");
-                return false;
+                return DataValidationErrors.EmptyField;
             }
 
-            string value = splitValues[i];
+            var gameNetworkData = ScriptableObject.CreateInstance<GameNetworkData>();
 
-            if(value.Length == 3)
+            gameNetworkData.netMode = netMode;
+            gameNetworkData.portNum = portNum;
+
+            if (!PortNumDataValidation(portNum))
             {
-                if (!(value[0] >= 48 && value[0] <= 50))
+                return DataValidationErrors.PortNumError;
+            }
+
+            gameNetworkData.iPAddress = iPAddress;
+
+            if (!IPAddressDataValidation(iPAddress))
+            {
+                return DataValidationErrors.IPAddressError;
+            }
+
+            gameNetworkData.playerName = playerName;
+
+            _gameNetworkDataList.Add(gameNetworkData);
+
+            return DataValidationErrors.None;
+        }
+
+        private bool PortNumDataValidation(string portNum)
+        {
+            for (int i = 0; i < portNum.Length; i++)
+            {
+                if (!(portNum[i] >= 48 && portNum[i] <= 57))
                 {
-                    Debug.Log("Lenght 2");
                     return false;
                 }
-                else if (value[0] == 2)
+            }
+
+            return true;
+        }
+
+        private bool IPAddressDataValidation(string iPAddress)
+        {
+            for (int i = 0; i < iPAddress.Length; i++)
+            {
+                if (iPAddress[i] == ' ')
                 {
-                    if (!(value[1] >= 48 && value[1] <= 53))
+                    return false;
+                }
+            }
+
+            string[] splitValues = iPAddress.Split('.');
+
+            if (splitValues.Length != 4)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < splitValues.Length; i++)
+            {
+                if (splitValues[i].Length > 3 || splitValues[i].Length < 1)
+                {
+                    return false;
+                }
+
+                string value = splitValues[i];
+
+                if (value.Length == 3)
+                {
+                    if (!(value[0] >= 48 && value[0] <= 50))
                     {
-                        Debug.Log("Lenght 3");
                         return false;
                     }
-                    else if (!(value[2] >= 48 && value[2] <= 53))
+                    else if (value[0] == 2)
                     {
-                        Debug.Log("Lenght 4");
-                        return false;
+                        if (!(value[1] >= 48 && value[1] <= 53))
+                        {
+                            return false;
+                        }
+                        else if (!(value[2] >= 48 && value[2] <= 53))
+                        {
+                            return false;
+                        }
                     }
                 }
             }
+
+            return true;
         }
 
-        return true;
+        public void SetUnityTransport(string portNum, string iPAddress)
+        {
+            UnityTransport unityTransport = GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<UnityTransport>();
+
+            unityTransport.ConnectionData.Address = iPAddress;
+            unityTransport.ConnectionData.Port = ushort.Parse(portNum);
+        }
+
+        public List<GameNetworkData> GetGameNetworkData()
+        {
+            return _gameNetworkDataList;
+        }
+
+        public GameNetworkData GetGameNetworkData(GameNetworkData.ENetMode enetMode)
+        {
+            foreach (GameNetworkData gameData in _gameNetworkDataList)
+            {
+                if(gameData.netMode == enetMode) return gameData;
+            }
+
+            return null;
+        }
     }
 
-    private void SetUnityTransport(string portNum, string iPAddress)
-    {
-        _unityTransport.ConnectionData.Address = iPAddress;
-        _unityTransport.ConnectionData.Port = ushort.Parse(portNum);
-    }
-
-    public List<GameNetworkData> GetGameNetworkData()
-    {
-        return _gameNetworkDataList;
-    }
 }

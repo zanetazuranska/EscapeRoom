@@ -250,6 +250,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Inventory"",
+            ""id"": ""883d2c16-7032-4578-a96e-e9793c58735a"",
+            ""actions"": [
+                {
+                    ""name"": ""Active/Desactiv"",
+                    ""type"": ""Button"",
+                    ""id"": ""37128d06-1533-402d-99cb-eb1b4b0106cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""982baed5-dddc-4f0b-bc2e-0d9d7c99e5ad"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Active/Desactiv"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -262,6 +290,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_WalkRL = m_Movement.FindAction("WalkR/L", throwIfNotFound: true);
         m_Movement_WalkUD = m_Movement.FindAction("WalkU/D", throwIfNotFound: true);
+        // Inventory
+        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
+        m_Inventory_ActiveDesactiv = m_Inventory.FindAction("Active/Desactiv", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -427,6 +458,52 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MovementActions @Movement => new MovementActions(this);
+
+    // Inventory
+    private readonly InputActionMap m_Inventory;
+    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
+    private readonly InputAction m_Inventory_ActiveDesactiv;
+    public struct InventoryActions
+    {
+        private @PlayerInput m_Wrapper;
+        public InventoryActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ActiveDesactiv => m_Wrapper.m_Inventory_ActiveDesactiv;
+        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
+        public void AddCallbacks(IInventoryActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
+            @ActiveDesactiv.started += instance.OnActiveDesactiv;
+            @ActiveDesactiv.performed += instance.OnActiveDesactiv;
+            @ActiveDesactiv.canceled += instance.OnActiveDesactiv;
+        }
+
+        private void UnregisterCallbacks(IInventoryActions instance)
+        {
+            @ActiveDesactiv.started -= instance.OnActiveDesactiv;
+            @ActiveDesactiv.performed -= instance.OnActiveDesactiv;
+            @ActiveDesactiv.canceled -= instance.OnActiveDesactiv;
+        }
+
+        public void RemoveCallbacks(IInventoryActions instance)
+        {
+            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInventoryActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InventoryActions @Inventory => new InventoryActions(this);
     public interface ICameraControllerActions
     {
         void OnMouseX(InputAction.CallbackContext context);
@@ -436,5 +513,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnWalkRL(InputAction.CallbackContext context);
         void OnWalkUD(InputAction.CallbackContext context);
+    }
+    public interface IInventoryActions
+    {
+        void OnActiveDesactiv(InputAction.CallbackContext context);
     }
 }

@@ -1,25 +1,30 @@
 using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerNetworkController : NetworkBehaviour
+namespace ER
 {
-    private void Awake()
+    public class PlayerNetworkController : NetworkBehaviour
     {
-        NetworkManager.Singleton.OnClientStarted += OnClientStart;
-    }
+        [SerializeField] private GameObject _canvas;
 
-    public override void OnNetworkSpawn()
-    {
-        transform.position = new Vector3(-10.9f, 6.57f, -13.47f);
-    }
+        private Vector3 _spawnPosition = new Vector3(-10.9f, 6.57f, -13.47f);
 
-    private void Update()
-    {
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            transform.position = _spawnPosition;
 
-    }
+            if(IsOwner)
+            {
+                _canvas.SetActive(true);
+            }
 
-    private void OnClientStart()
-    {
-        Debug.Log("Client Start");
+            if(IsHost)
+            {
+                EscapeRoomApp.Instance.OnHostSpawned.Invoke();
+            }
+
+            GarageDoor.Instance.RegisterPlayer(this.gameObject);
+        }
     }
 }

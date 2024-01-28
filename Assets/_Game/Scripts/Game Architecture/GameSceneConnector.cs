@@ -1,17 +1,19 @@
-using ER;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameSceneConnector : MonoBehaviour
+namespace ER
 {
-    public static UnityEvent<GameController> OnGameSceneLoaded = new UnityEvent<GameController>(); //unity event
-
-    [SerializeField]
-    private GameController _gameController;
-
-    public void Start()
+    public class GameSceneConnector : MonoBehaviour
     {
-        if(OnGameSceneLoaded != null)
-        OnGameSceneLoaded.Invoke(_gameController);
+        public static UnityEvent<GameController> OnGameSceneLoaded = new UnityEvent<GameController>();
+
+        [SerializeField]
+        private GameController _gameController;
+
+        private void Start()
+        {
+            if (OnGameSceneLoaded != null)
+                OnGameSceneLoaded.Invoke(_gameController);
+        }
     }
 }

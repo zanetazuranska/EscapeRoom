@@ -1,4 +1,6 @@
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ER
 {
@@ -7,6 +9,20 @@ namespace ER
         public static EscapeRoomApp Instance { get; private set; }
 
         private GameController _currentGameController;
+
+        public UnityEvent OnHostSpawned = new UnityEvent();
+        public UnityEvent OnClientSpawned = new UnityEvent();
+
+        [SerializeField] private Transform _winPrefab;
+        private Transform _winTransform;
+
+        public enum StartAs
+        {
+            Host = 0,
+            Client = 1,
+        }
+
+        public StartAs startAs;
 
         private void Awake()
         {
@@ -25,6 +41,13 @@ namespace ER
         public void SetCurrentGameController(GameController gameController)
         {
             _currentGameController = gameController;
+        }
+
+        [ServerRpc]
+        public void WinServerRpc()
+        {
+            _winTransform = Instantiate(_winPrefab);
+            _winTransform.GetComponent<NetworkObject>().Spawn(true);
         }
 
     }

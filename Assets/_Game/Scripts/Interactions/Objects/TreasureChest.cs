@@ -2,30 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreasureChest : InteractableObject
+namespace ER
 {
-    [SerializeField] private List<Material> _materials;
-    private MeshRenderer _renderer;
-
-    private void Awake()
+    public class TreasureChest : InteractableObject
     {
-        _renderer = GetComponent<MeshRenderer>();
-    }
+        private MeshRenderer _renderer;
 
-    public override void OnClick()
-    {
-        Debug.Log("On Click");
-    }
+        private void Awake()
+        {
+            _renderer = GetComponent<MeshRenderer>();
+        }
 
-    public override void OnHover()
-    {
-        _renderer.materials[1].SetFloat("_Scale", 1.03f);
-    }
+        public override void OnClick()
+        {
+            Debug.Log("On Click");
+        }
 
-    public override void OnUnHover()
-    {
-        Debug.Log("Unhover");
+        public override void OnHover()
+        {
+            _renderer.materials[1].SetFloat("_Scale", 1.03f);
+        }
 
-        _renderer.materials[1].SetFloat("_Scale", 0f);
+        public override void OnUnHover()
+        {
+            _renderer.materials[1].SetFloat("_Scale", 0f);
+        }
     }
 }
