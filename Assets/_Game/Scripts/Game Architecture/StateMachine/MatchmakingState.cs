@@ -36,14 +36,14 @@ namespace ER
         {
             GameSceneManager.Instance.GetSceneFade().OnInAnimComplete.AddListener(OnInAnimationCompleteGameHandler);
             GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.GameScene, true);
-            EscapeRoomApp.Instance.startAs = EscapeRoomApp.StartAs.Client;
+            EscapeRoomApp.Instance.startAs = EStartAs.Client;
         }
 
         private void OnHostGameClickHandler()
         {
             GameSceneManager.Instance.GetSceneFade().OnInAnimComplete.AddListener(OnInAnimationCompleteGameHandler);
             GameSceneManager.Instance.LoadScene(GameSceneManager.Scene.GameScene, true);
-            EscapeRoomApp.Instance.startAs = EscapeRoomApp.StartAs.Host;
+            EscapeRoomApp.Instance.startAs = EStartAs.Host;
         }
 
         private void OnInAnimationCompleteMenuHandler()

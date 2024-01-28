@@ -17,19 +17,11 @@ namespace ER
         private int _startOfChecking = 0;
         private int _endOfChecking = 0;
 
-        private int _inventorySize;
+        private int _inventorySize = 0;
         private List<Item> _currentItemList = new List<Item>();
 
         private void Awake()
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                if (transform.GetChild(i).GetComponent<InventorySlot>() != null)
-                {
-                    _slots.Add(transform.GetChild(i).GetComponent<InventorySlot>());
-                }
-            }
-
             if (GetComponentInParent<PlayerController>() != null)
             {
                 GetComponentInParent<PlayerController>().GetInventory().OnInventoryChange.AddListener(UpdateInventoryUI);
@@ -49,9 +41,9 @@ namespace ER
 
             if (_inventorySize > 0)
             {
-                if (_inventorySize > 10)
+                if (_inventorySize > _slots.Count)
                 {
-                    _endOfChecking = 10 + _startOfChecking;
+                    _endOfChecking = _slots.Count + _startOfChecking;
                 }
                 else
                 {
@@ -69,7 +61,7 @@ namespace ER
                     _arrowLeft.GetComponent<Image>().sprite = _activearrows[0];
                 }
 
-                if (_inventorySize > 10 && _endOfChecking < _inventorySize)
+                if (_inventorySize > _slots.Count && _endOfChecking < _inventorySize)
                 {
                     _arrowRight.GetComponent<Image>().sprite = _activearrows[1];
                 }
@@ -115,7 +107,7 @@ namespace ER
 
         private void OnArrowRightClick()
         {
-            if (_inventorySize > 10 && _endOfChecking < _inventorySize)
+            if (_inventorySize > _slots.Count && _endOfChecking < _inventorySize)
             {
                 _startOfChecking++;
 

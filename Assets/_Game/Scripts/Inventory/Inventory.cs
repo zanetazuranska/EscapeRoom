@@ -27,14 +27,14 @@ namespace ER
             }
         }
 
-        public bool Add(Item item)
+        public bool AddItem(Item item)
         {
             _items.Add(item);
             OnInventoryChange.Invoke(_items);
             return true;
         }
 
-        public bool Remove(Item item)
+        public bool RemoveItem(Item item)
         {
             if (_items.Contains(item))
             {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ER
 {
-    public class NetworkButtonsUi : MonoBehaviour
+    public class NetworkButtonsUI : MonoBehaviour
     {
         [SerializeField] private Button _host;
         [SerializeField] private Button _client;

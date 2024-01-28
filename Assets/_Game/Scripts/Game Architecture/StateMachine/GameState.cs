@@ -22,26 +22,36 @@ namespace ER
             GameSceneManager.Instance.OnSceneLoaded.AddListener(HandleGameSceneLoaded);
 
 
-            if(EscapeRoomApp.Instance.startAs == EscapeRoomApp.StartAs.Host)
+            if(EscapeRoomApp.Instance.startAs == EStartAs.Host)
             {
-                GameNetworkData gameData = NetworkSessionManager.Instance.GetGameNetworkData(GameNetworkData.ENetMode.Host);
-
-                NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
-
-                NetworkManager.Singleton.StartHost();
-
-                Cursor.lockState = CursorLockMode.Locked;
+                StartHost();
             }
             else
             {
-                GameNetworkData gameData = NetworkSessionManager.Instance.GetGameNetworkData(GameNetworkData.ENetMode.Client);
-
-                NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
-
-                NetworkManager.Singleton.StartClient();
-
-                Cursor.lockState = CursorLockMode.Locked;
+                StartClient();
             }
+        }
+
+        private void StartHost()
+        {
+            GameNetworkData gameData = NetworkSessionManager.Instance.GetGameNetworkData(GameNetworkData.ENetMode.Host);
+
+            NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
+
+            NetworkManager.Singleton.StartHost();
+
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void StartClient()
+        {
+            GameNetworkData gameData = NetworkSessionManager.Instance.GetGameNetworkData(GameNetworkData.ENetMode.Client);
+
+            NetworkSessionManager.Instance.SetUnityTransport(gameData.portNum, gameData.iPAddress);
+
+            NetworkManager.Singleton.StartClient();
+
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         public override void UpdateState(StateMachine stateMachine)

@@ -146,7 +146,9 @@ namespace ER
                 for (int i = 1; i < SceneManager.sceneCount; i++)
                 {
                     if (SceneManager.GetSceneAt(i) != null && SceneManager.GetSceneAt(i).buildIndex != (int)_activeScene)
+                    {
                         SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i).buildIndex);
+                    }   
                 }
             }
         }

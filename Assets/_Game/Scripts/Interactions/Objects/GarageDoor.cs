@@ -20,6 +20,8 @@ namespace ER
 
         private const string DOOR = "The door is closed... How to get out?";
 
+        private const string SCALE = "_Scale";
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -58,12 +60,12 @@ namespace ER
 
         public override void OnHover()
         {
-            _renderer.materials[1].SetFloat("_Scale", 1.03f);
+            _renderer.materials[1].SetFloat(SCALE, 1.03f);
         }
 
         public override void OnUnHover()
         {
-            _renderer.materials[1].SetFloat("_Scale", 0f);
+            _renderer.materials[1].SetFloat(SCALE, 0f);
         }
 
         public void RegisterPlayer(GameObject player)

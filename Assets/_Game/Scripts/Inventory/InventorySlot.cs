@@ -16,9 +16,13 @@ namespace ER
         [SerializeField] private GameObject _hint;
         [SerializeField] private TextMeshProUGUI _text;
 
+        private Button _button;
+
         private void Awake()
         {
-            GetComponent<Button>().onClick.AddListener(OnSlotClick);
+            _button = GetComponent<Button>();
+
+            _button.onClick.AddListener(OnSlotClick);
         }
 
         public void ActiveSlot()
@@ -72,7 +76,7 @@ namespace ER
 
         private void OnDestroy()
         {
-            GetComponent<Button>().onClick.RemoveListener(OnSlotClick);
+            _button.onClick.RemoveListener(OnSlotClick);
         }
     }
 

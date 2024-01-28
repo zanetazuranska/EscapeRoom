@@ -7,12 +7,7 @@ namespace ER
     public class WorldItem : InteractableObject
     {
         [SerializeField] private Item.ItemType _itemType;
-        private MeshRenderer _renderer;
-
-        private void Awake()
-        {
-            _renderer = GetComponent<MeshRenderer>();
-        }
+        [SerializeField] private MeshRenderer _renderer;
 
         public override void OnClick(InteractionContext context)
         {

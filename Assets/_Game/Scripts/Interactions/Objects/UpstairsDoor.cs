@@ -14,17 +14,6 @@ namespace ER
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
-
-            if(_upstairsRiddleUI == null)
-            {
-                _upstairsRiddleUI = GameObject.FindGameObjectWithTag("MainCanvas").transform.GetChild(2).gameObject;
-            }
-
-            if(_exit == null && _upstairsRiddleUI != null)
-            {
-                _exit = _upstairsRiddleUI.transform.GetChild(3).GetComponent<Button>();
-                _exit.onClick.AddListener(OnExitClick);
-            }
         }
 
         public override void OnClick(InteractionContext context)

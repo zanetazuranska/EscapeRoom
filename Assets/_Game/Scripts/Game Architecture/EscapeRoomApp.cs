@@ -4,6 +4,12 @@ using UnityEngine.Events;
 
 namespace ER
 {
+    public enum EStartAs
+    {
+        Host = 0,
+        Client = 1,
+    }
+
     public class EscapeRoomApp : MonoBehaviour
     {
         public static EscapeRoomApp Instance { get; private set; }
@@ -13,18 +19,9 @@ namespace ER
         public UnityEvent OnHostSpawned = new UnityEvent();
         public UnityEvent OnClientSpawned = new UnityEvent();
 
-        [SerializeField] private Transform _winPrefab;
-        private Transform _winTransform;
-
         [SerializeField] private ApplicationFlowController _applicationFlowController;
 
-        public enum StartAs
-        {
-            Host = 0,
-            Client = 1,
-        }
-
-        public StartAs startAs;
+        public EStartAs startAs;
 
         private void Awake()
         {
@@ -43,13 +40,6 @@ namespace ER
         public void SetCurrentGameController(GameController gameController)
         {
             _currentGameController = gameController;
-        }
-
-        [ServerRpc]
-        public void WinServerRpc()
-        {
-            _winTransform = Instantiate(_winPrefab);
-            _winTransform.GetComponent<NetworkObject>().Spawn(true);
         }
 
         public ApplicationFlowController GetAplicationFlowController()
