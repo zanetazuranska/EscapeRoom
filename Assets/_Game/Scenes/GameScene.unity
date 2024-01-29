@@ -9714,6 +9714,9 @@ MonoBehaviour:
   OnObjectSpawn:
     m_PersistentCalls:
       m_Calls: []
+  OnAnswerCorrectEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &847161101
 Transform:
   m_ObjectHideFlags: 0
@@ -12856,6 +12859,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MetalBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1d8136d168a0fe8499f60c97f6fc974e, type: 2}
+    - target: {fileID: 6094386333538288816, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.0000043257105
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -12872,6 +12885,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1995102269}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1995102270}
     - targetCorrespondingSourceObject: {fileID: 3610464665448148905, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
         type: 3}
       insertIndex: -1
@@ -12929,9 +12946,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 357cace1daa62384ba89559258ec73cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 1285372115}
   OnClickEvent:
     m_PersistentCalls:
       m_Calls: []
+  _riddleController: {fileID: 1995102268}
+  _networkObject: {fileID: 1995102270}
 --- !u!65 &1095940934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15246,6 +15266,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: e2eee86fd8a4988499e8c13b834ad2d7,
     type: 3}
   m_PrefabInstance: {fileID: 1284779645}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1285372115 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
+    type: 3}
+  m_PrefabInstance: {fileID: 1095940929}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &1289340566
 BoxCollider:
@@ -27409,6 +27435,9 @@ MonoBehaviour:
   OnObjectSpawn:
     m_PersistentCalls:
       m_Calls: []
+  OnAnswerCorrectEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1995102269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27429,6 +27458,20 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1995102270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995102267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc5e71541ec02a40b9805a411043ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1285372115}
+  _padlock: {fileID: 2117335174}
 --- !u!1 &1996019433
 GameObject:
   m_ObjectHideFlags: 0
@@ -28846,11 +28889,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Padlock_collider
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e56bc73f9f5760b4abe680b2a89efd82,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e56bc73f9f5760b4abe680b2a89efd82, type: 3}
+--- !u!1 &2117335174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e56bc73f9f5760b4abe680b2a89efd82,
+    type: 3}
+  m_PrefabInstance: {fileID: 2117335173}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2117335176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e56bc73f9f5760b4abe680b2a89efd82,

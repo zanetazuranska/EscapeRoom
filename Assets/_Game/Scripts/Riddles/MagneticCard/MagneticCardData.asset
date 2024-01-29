@@ -16,7 +16,7 @@ MonoBehaviour:
   proposedAnswer: []
   PuzzleAnswer:
   - ValueSet: f5ffffff2a00000014000000
-  - ValueSet: f1ffffff2d00000032000000
+  - ValueSet: f1ffffff2d000000f0ffffff
   PuzzleProposedAnswer:
   - ValueSet: f5ffffff2a00000014000000
-  - ValueSet: 000000000000000000000000
+  - ValueSet: f1ffffff2d000000f0ffffff

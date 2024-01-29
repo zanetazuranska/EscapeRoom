@@ -117,7 +117,7 @@ namespace ER.Riddle.UI
 
                         SetSkeletonKeyPosition(0, _currentLevelTestMarkPositionSkeletonKey1 - 1);
 
-                        if(riddleLogic.CheckAnswer(riddleLogic.GetRiddleData()))
+                        if(GetRiddleController().IsAnswerCorrect(GetRiddleController().GetRiddleData()))
                         {
                             OnAnswerCorrect();
                         }
@@ -149,7 +149,7 @@ namespace ER.Riddle.UI
 
                         SetSkeletonKeyPosition(1, _currentLevelTestMarkPositionSkeletonKey2 - 1);
 
-                        if (riddleLogic.CheckAnswer(riddleLogic.GetRiddleData()))
+                        if (GetRiddleController().IsAnswerCorrect(GetRiddleController().GetRiddleData()))
                         {
                             OnAnswerCorrect();
                         }

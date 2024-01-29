@@ -13,6 +13,7 @@ namespace ER.Riddle
         private Transform _riddleActivateObj;
 
         public UnityEvent<Transform> OnObjectSpawn = new UnityEvent<Transform>();
+        public UnityEvent OnAnswerCorrectEvent = new UnityEvent();
 
         private void Awake()
         {
@@ -79,6 +80,8 @@ namespace ER.Riddle
             GetRiddleLogic().OnRiddleCorrect();
 
             RiddleCorrectServerRpc();
+
+            OnAnswerCorrectEvent.Invoke();
         }
 
         [ServerRpc(RequireOwnership = false)]
