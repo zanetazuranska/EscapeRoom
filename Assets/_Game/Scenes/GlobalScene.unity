@@ -155,8 +155,6 @@ MonoBehaviour:
   OnClientSpawned:
     m_PersistentCalls:
       m_Calls: []
-  _winPrefab: {fileID: 6901520858391762322, guid: 2d6ec423567255c4ca5923d001547cf7,
-    type: 3}
   _applicationFlowController: {fileID: 99753617}
   startAs: 0
 --- !u!4 &43444700
@@ -892,6 +890,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe2e3560c579e27488d2ff308b45c71e, type: 2}
   - {fileID: 11400000, guid: b9642a251d3b65041afb5576cb32cf5d, type: 2}
   - {fileID: 11400000, guid: ac72099123cc30b4a9f6c2cdd31d9b27, type: 2}
+  - {fileID: 11400000, guid: 236155aa9eedaaa42a81831dc6bd4941, type: 2}
+  - {fileID: 11400000, guid: 3a9b0cc5632e89b4fb92964042fcae4a, type: 2}
 --- !u!4 &1930249060
 Transform:
   m_ObjectHideFlags: 0

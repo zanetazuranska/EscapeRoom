@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67516fea49f14a54289314ac17d59c2b, type: 3}
+  m_Name: Spoon
+  m_EditorClassIdentifier: 
+  itemType: 6
+  hint: It fits in the lock
+  sprite: {fileID: 1822899614, guid: ab9fc3977520a9d4e9ad57914c4f62aa, type: 3}
