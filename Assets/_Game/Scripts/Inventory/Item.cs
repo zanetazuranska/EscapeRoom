@@ -15,6 +15,7 @@ namespace ER
             Axe = 5,
             Spoon = 6,
             Wire = 7,
+            MagneticCard = 8,
         }
 
         public ItemType itemType;

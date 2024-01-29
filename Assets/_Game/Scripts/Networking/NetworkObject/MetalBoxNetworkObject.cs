@@ -7,6 +7,7 @@ public class MetalBoxNetworkObject : NetworkBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject _padlock;
+    [SerializeField] private GameObject _card;
     private const string ANIMATOR_BOOL = "CanOpen";
 
     private NetworkVariable<bool> _isOpenN = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -17,6 +18,8 @@ public class MetalBoxNetworkObject : NetworkBehaviour
         _padlock.SetActive(false);
         _isOpenN.Value = value;
         _animator.SetBool(ANIMATOR_BOOL, true);
+
+        _card.SetActive(true);
     }
 
     public void SetIsOpen(bool value)
@@ -25,6 +28,8 @@ public class MetalBoxNetworkObject : NetworkBehaviour
         {
             _padlock.SetActive(false);
             _isOpenN.Value = value;
+
+            _card.SetActive(true);
         }
         else
         {
