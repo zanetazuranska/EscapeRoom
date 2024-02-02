@@ -10,7 +10,10 @@ namespace ER.Riddle
         [SerializeField] private RiddleLogic _riddleLogic;
         [SerializeField] private Transform _riddleActivateObjPrefab;
         [SerializeField] private bool _spawnNetworkObject = true;
+        [SerializeField] private GameObject _networkObjectParent;
         private Transform _riddleActivateObj;
+
+        [SerializeField] private string tag;
 
         public UnityEvent<Transform> OnObjectSpawn = new UnityEvent<Transform>();
         public UnityEvent OnAnswerCorrectEvent = new UnityEvent();
@@ -34,8 +37,9 @@ namespace ER.Riddle
 
             if(_spawnNetworkObject)
             {
-                _riddleActivateObj = Instantiate(_riddleActivateObjPrefab, this.gameObject.transform);
+                _riddleActivateObj = Instantiate(_riddleActivateObjPrefab);
                 _riddleActivateObj.GetComponent<NetworkObject>().Spawn(true);
+                _riddleActivateObj.GetComponent<NetworkObject>().TrySetParent(this.transform);
             }
             else
             {
@@ -47,6 +51,11 @@ namespace ER.Riddle
 
         private void OnClientSpawned()
         {
+            if(_riddleActivateObj == null)
+            {
+                _riddleActivateObj = GameObject.FindGameObjectWithTag(tag).transform;
+            }
+
             EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
 
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);

@@ -8950,6 +8950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 773369404}
+  - component: {fileID: 773369405}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -8972,6 +8973,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &773369405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773369403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1949996891
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &780023119
 GameObject:
   m_ObjectHideFlags: 0
@@ -9855,6 +9876,8 @@ MonoBehaviour:
   _riddleActivateObjPrefab: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
     type: 3}
   _spawnNetworkObject: 1
+  _networkObjectParent: {fileID: 773369403}
+  tag: Upstairs
   OnObjectSpawn:
     m_PersistentCalls:
       m_Calls: []
@@ -9891,7 +9914,7 @@ MonoBehaviour:
   GlobalObjectIdHash: 1620016726
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
+  ActiveSceneSynchronization: 1
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
@@ -13002,6 +13025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MetalBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 3610464665448148905, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
+        type: 3}
+      propertyPath: m_TagString
+      value: Padlock
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
         type: 3}
@@ -27589,7 +27617,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _riddleLogic: {fileID: 11400000, guid: f9ec3e898d0657d49b63f31e9a86e92f, type: 2}
   _riddleActivateObjPrefab: {fileID: 1995102266}
-  _spawnNetworkObject: 1
+  _spawnNetworkObject: 0
+  _networkObjectParent: {fileID: 1995102267}
+  tag: Padlock
   OnObjectSpawn:
     m_PersistentCalls:
       m_Calls: []
