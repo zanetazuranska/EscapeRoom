@@ -12,6 +12,8 @@ namespace ER
         [SerializeField] private Camera _camera;
         [SerializeField] private GameObject _textMessageObj;
         [SerializeField] private TextMeshProUGUI _textMessage;
+        [SerializeField] private LayerMask _layerMask;
+        [SerializeField] private float _maxDistance;
 
         private Ray _ray = new Ray();
         private RaycastHit _hit = new RaycastHit();
@@ -35,7 +37,7 @@ namespace ER
         private void CheckHover()
         {
             if (!EventSystem.current.IsPointerOverGameObject()
-                && Physics.Raycast(_ray, out _hit))
+                && Physics.Raycast(_ray, out _hit, _maxDistance, _layerMask))
             {
                 InteractableObject interactableObject = _hit.transform.GetComponent<InteractableObject>();
 
@@ -68,7 +70,7 @@ namespace ER
                 bool canPerform = true;
 
                 if (!EventSystem.current.IsPointerOverGameObject()
-                && Physics.Raycast(_ray, out _hit))
+                && Physics.Raycast(_ray, out _hit, _maxDistance, _layerMask))
                 {
                     InteractionContext context = new InteractionContext(GetComponentInParent<PlayerController>(), true, this);
 
