@@ -20,6 +20,8 @@ namespace ER
 
         private const string ANIMATOR_BOOL = "CanOpen";
 
+        private CameraController _cameraController;
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -41,6 +43,10 @@ namespace ER
             if (items.Contains(spoon) && items.Contains(wire))
             {
                 OnClickEvent.Invoke();
+
+                _cameraController = context.playerController.GetComponentInChildren<CameraController>();
+
+                _cameraController.canMoveCamera = false;
             }
             else
             {
@@ -68,6 +74,11 @@ namespace ER
             _animator.SetBool(ANIMATOR_BOOL, true);
 
             _riddleController.OnAnswerCorrectEvent.RemoveListener(OnRiddleCorrect);
+        }
+
+        public void SetCameraTrue()
+        {
+            _cameraController.canMoveCamera = true;
         }
     }
 }

@@ -84,6 +84,8 @@ namespace ER.Riddle.UI
         {
             _ui.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+
+            _networkObject.GetComponent<UpstairsDoor>().SetCameraTrue();
         }
 
         private void ChangeValueUp(int barrelId)

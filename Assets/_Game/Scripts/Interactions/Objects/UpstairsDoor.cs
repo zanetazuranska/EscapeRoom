@@ -11,6 +11,8 @@ namespace ER
         [SerializeField] private GameObject _upstairsRiddleUI;
         [SerializeField] private Button _exit;
 
+        private CameraController _cameraController;
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -20,6 +22,10 @@ namespace ER
         {
             Cursor.lockState = CursorLockMode.None;
             _upstairsRiddleUI.SetActive(true);
+
+            _cameraController = context.playerController.GetComponent<CameraController>();
+
+            _cameraController.canMoveCamera = false;
         }
 
         public override void OnHover()

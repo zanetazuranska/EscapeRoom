@@ -19,6 +19,8 @@ namespace ER
 
         private float _rotation = 0f;
 
+        public bool canMoveCamera = true;
+
         public override void OnNetworkSpawn()
         {
             if (this.IsOwner)
@@ -33,6 +35,8 @@ namespace ER
         private void Update()
         {
             if (_playerController.GetIsIventoryActive() == true) return;
+
+            if (!canMoveCamera) return;
 
             SetMouseDelta();
             SetCamera();

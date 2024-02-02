@@ -9,6 +9,8 @@ namespace ER.Riddle
 
         public UnityEvent OnClickEvent = new UnityEvent();
 
+        private CameraController _cameraController;
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -17,6 +19,10 @@ namespace ER.Riddle
         public override void OnClick(InteractionContext context)
         {
             OnClickEvent.Invoke();
+
+            _cameraController = context.playerController.GetComponentInChildren<CameraController>();
+
+            _cameraController.canMoveCamera = false;
         }
 
         public override void OnHover()
@@ -27,6 +33,11 @@ namespace ER.Riddle
         public override void OnUnHover()
         {
             _renderer.materials[1].SetFloat("_Scale", 0f);
+        }
+
+        public void SetCameraTrue()
+        {
+            _cameraController.canMoveCamera = true;
         }
     }
 

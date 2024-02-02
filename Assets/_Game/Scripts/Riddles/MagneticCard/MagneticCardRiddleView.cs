@@ -100,6 +100,8 @@ namespace ER.Riddle.UI
         {
             _ui.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+
+            _networkObject.GetComponent<Padlock>().SetCameraTrue();
         }
 
         private void LevelTestMarkController()
