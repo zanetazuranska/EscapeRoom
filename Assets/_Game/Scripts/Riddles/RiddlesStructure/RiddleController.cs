@@ -100,8 +100,11 @@ namespace ER.Riddle
         [ServerRpc(RequireOwnership = false)]
         private void RiddleCorrectServerRpc()
         {
-            _riddleActivateObj.GetComponent<NetworkObject>().Despawn();
-            Destroy(_riddleActivateObj.gameObject);
+            if(_spawnNetworkObject)
+            {
+                _riddleActivateObj.GetComponent<NetworkObject>().Despawn();
+                Destroy(_riddleActivateObj.gameObject);
+            }
         }
 
         public Transform GetRiddleActiveGameObject()

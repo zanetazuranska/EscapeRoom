@@ -18,7 +18,14 @@ public class MetalBoxNetworkObject : NetworkBehaviour
         _padlock.SetActive(false);
         _isOpenN.Value = value;
         _animator.SetBool(ANIMATOR_BOOL, true);
+        _card.SetActive(true);
+    }
 
+    [ClientRpc]
+    private void AnimationOnClientClientRpc()
+    {
+        _padlock.SetActive(false);
+        _animator.SetBool(ANIMATOR_BOOL, true);
         _card.SetActive(true);
     }
 
@@ -28,12 +35,14 @@ public class MetalBoxNetworkObject : NetworkBehaviour
         {
             _padlock.SetActive(false);
             _isOpenN.Value = value;
-
             _card.SetActive(true);
+
+            AnimationOnClientClientRpc();
         }
         else
         {
             SetNetworkVaribleServerRpc(value);
+            _card.SetActive(true);
         }
     }
 
