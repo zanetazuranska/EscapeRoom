@@ -21,11 +21,13 @@ namespace ER
 
             if(IsHost)
             {
+                Debug.Log("Host");
                 EscapeRoomApp.Instance.OnHostSpawned.Invoke();
             }
 
-            if (IsClient)
+            if (IsClient && !IsHost)
             {
+                Debug.Log("Client");
                 EscapeRoomApp.Instance.OnClientSpawned.Invoke();
             }
 

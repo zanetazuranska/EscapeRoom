@@ -28,6 +28,8 @@ namespace ER.Riddle
 
         private void OnHostSpawned()
         {
+            EscapeRoomApp.Instance.OnHostSpawned.RemoveListener(OnHostSpawned);
+
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
             if(_spawnNetworkObject)
@@ -45,6 +47,8 @@ namespace ER.Riddle
 
         private void OnClientSpawned()
         {
+            EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
+
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
             OnObjectSpawn.Invoke(_riddleActivateObj);
