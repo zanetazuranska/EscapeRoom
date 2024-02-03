@@ -13,59 +13,29 @@ namespace ER
         [SerializeField] private GameObject _faceHost;
         [SerializeField] private GameObject _faceClient;
 
-        [ClientRpc]
-        private void SetClientFaceClientRpc()
-        {
-            if (IsHost) return;
-
-            _faceClient.SetActive(true);
-        }
-
-        [ClientRpc]
-        private void SetHostFaceClientRpc()
-        {
-            if(!IsHost) return;
-
-            _faceHost.SetActive(true);
-        }
-
-        [ServerRpc (RequireOwnership = false)]
-        private void InvokeOnHostServerRpc()
-        {
-            SetHostFaceClientRpc();
-        }
-
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
             transform.position = _spawnPosition;
 
-            if(IsOwner)
+            GarageDoor.Instance.RegisterPlayer(this.gameObject);
+
+            if (IsOwner)
             {
                 _canvas.SetActive(true);
             }
 
             if(IsHost)
             {
-                _faceHost.SetActive(true);
-
                 EscapeRoomApp.Instance.OnHostSpawned.Invoke();
+                _faceHost.SetActive(true);
             }
 
             if (IsClient && !IsHost)
             {
-                _faceClient.SetActive(true);
-
                 EscapeRoomApp.Instance.OnClientSpawned.Invoke();
-
+                _faceClient.SetActive(true);
             }
-
-            GarageDoor.Instance.RegisterPlayer(this.gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(SetClientFaceClientRpc);
         }
     }
 }

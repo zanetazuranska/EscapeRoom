@@ -57,6 +57,11 @@ namespace ER
             _rotation = Mathf.Clamp(_rotation, -40f, 40f);
             transform.localRotation = Quaternion.Euler(_rotation, 0f, 0f);
         }
+
+        public void ResetCamera()
+        {
+            _camera.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        }
     }
 
 }

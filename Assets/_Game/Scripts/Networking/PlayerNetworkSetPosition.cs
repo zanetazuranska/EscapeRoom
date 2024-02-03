@@ -24,6 +24,7 @@ public class PlayerNetworkSetPosition : NetworkBehaviour
         {
             player.transform.position = new Vector3(20.0f, 7.7f, -3.1f);
             player.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
+            player.GetComponent<CameraController>().ResetCamera();
 
             player.GetComponent<PlayerController>().DesactiveInventory();
 
@@ -45,6 +46,7 @@ public class PlayerNetworkSetPosition : NetworkBehaviour
         {
             player.transform.position = new Vector3(20.0f, 7.57f, -3.1f);
             player.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
+            player.GetComponent<CameraController>().ResetCamera();
 
             player.GetComponent<PlayerController>().DesactiveInventory();
             OnSetPosition.Invoke();

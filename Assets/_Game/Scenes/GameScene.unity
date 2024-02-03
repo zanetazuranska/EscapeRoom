@@ -11673,10 +11673,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _riddleLogic: {fileID: 11400000, guid: 481ae1e7afdcc854c8bf99060f8b837c, type: 2}
-  _riddleActivateObjPrefab: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
-    type: 3}
   _spawnNetworkObject: 1
-  _networkObjectParent: {fileID: 773369403}
+  _riddleActivateObj: {fileID: 1290177229}
   tag: Upstairs
   OnObjectSpawn:
     m_PersistentCalls:
@@ -18093,6 +18091,85 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.77199996, y: 0.03, z: 0.47422087}
   m_Center: {x: -0.385, y: 0.015, z: -0.23554644}
+--- !u!1001 &1290177228
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 28.912
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 67.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -44.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850792522545654430, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3621557222
+      objectReference: {fileID: 0}
+    - target: {fileID: 6448084080801287341, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+        type: 3}
+      propertyPath: m_Name
+      value: UpstairsDoor
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4dc7904a36b6fdf4eb75be88261f3faf, type: 3}
+--- !u!4 &1290177229 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 961565484771942771, guid: 4dc7904a36b6fdf4eb75be88261f3faf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1290177228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!61 &1297192358
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32662,12 +32739,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994175326}
   m_CullTransparentMesh: 1
---- !u!4 &1995102266 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4499669108176596877, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
-    type: 3}
-  m_PrefabInstance: {fileID: 1095940929}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1995102267 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 68d41f7b9abb8b54ab4f70ee27f42a40,
@@ -32687,9 +32758,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _riddleLogic: {fileID: 11400000, guid: f9ec3e898d0657d49b63f31e9a86e92f, type: 2}
-  _riddleActivateObjPrefab: {fileID: 1995102266}
   _spawnNetworkObject: 0
-  _networkObjectParent: {fileID: 1995102267}
+  _riddleActivateObj: {fileID: 0}
   tag: Padlock
   OnObjectSpawn:
     m_PersistentCalls:
@@ -37478,3 +37548,4 @@ SceneRoots:
   - {fileID: 847161101}
   - {fileID: 1435629091}
   - {fileID: 1603905372}
+  - {fileID: 1290177228}

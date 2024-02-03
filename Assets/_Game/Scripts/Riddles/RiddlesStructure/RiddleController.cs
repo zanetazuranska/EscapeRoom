@@ -8,10 +8,10 @@ namespace ER.Riddle
     public class RiddleController : NetworkBehaviour
     {
         [SerializeField] private RiddleLogic _riddleLogic;
-        [SerializeField] private Transform _riddleActivateObjPrefab;
+        //[SerializeField] private Transform _riddleActivateObjPrefab;
         [SerializeField] private bool _spawnNetworkObject = true;
-        [SerializeField] private GameObject _networkObjectParent;
-        private Transform _riddleActivateObj;
+        //[SerializeField] private GameObject _networkObjectParent;
+        [SerializeField] private Transform _riddleActivateObj;
 
         [SerializeField] private string tag;
 
@@ -35,16 +35,16 @@ namespace ER.Riddle
 
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
-            if(_spawnNetworkObject)
-            {
-                _riddleActivateObj = Instantiate(_riddleActivateObjPrefab);
-                _riddleActivateObj.GetComponent<NetworkObject>().Spawn(true);
-                _riddleActivateObj.GetComponent<NetworkObject>().TrySetParent(this.transform);
-            }
-            else
-            {
-                _riddleActivateObj = _riddleActivateObjPrefab;
-            }
+            //if(_spawnNetworkObject)
+           // {
+                //_riddleActivateObj = Instantiate(_riddleActivateObjPrefab);
+                //_riddleActivateObj.GetComponent<NetworkObject>().Spawn(true);
+                //_riddleActivateObj.GetComponent<NetworkObject>().TrySetParent(this.transform);
+           // }
+            //else
+            //{
+                //_riddleActivateObj = _riddleActivateObjPrefab;
+            //}
 
             OnObjectSpawn.Invoke(_riddleActivateObj);
         }
@@ -52,12 +52,7 @@ namespace ER.Riddle
         private void OnClientSpawned()
         {
             Debug.Log("Client");
-
-            if(_riddleActivateObj == null)
-            {
-                _riddleActivateObj = GameObject.FindGameObjectWithTag(tag).transform;
-            }
-
+            EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
             OnObjectSpawn.Invoke(_riddleActivateObj);
@@ -92,7 +87,16 @@ namespace ER.Riddle
         {
             GetRiddleLogic().OnRiddleCorrect();
 
-            RiddleCorrectServerRpc();
+            //RiddleCorrectServerRpc();
+
+            if(IsHost)
+            {
+                DestroyDoorClientRpc();
+            }
+            else
+            {
+                RiddleCorrectServerRpc();
+            }
 
             OnAnswerCorrectEvent.Invoke();
         }
@@ -100,9 +104,20 @@ namespace ER.Riddle
         [ServerRpc(RequireOwnership = false)]
         private void RiddleCorrectServerRpc()
         {
-            if(_spawnNetworkObject)
+            //if(_spawnNetworkObject)
+            //{
+            //    _riddleActivateObj.GetComponent<NetworkObject>().Despawn();
+            //    Destroy(_riddleActivateObj.gameObject);
+            //}
+
+            DestroyDoorClientRpc();
+        }
+
+        [ClientRpc]
+        private void DestroyDoorClientRpc()
+        {
+            if (_spawnNetworkObject)
             {
-                _riddleActivateObj.GetComponent<NetworkObject>().Despawn();
                 Destroy(_riddleActivateObj.gameObject);
             }
         }

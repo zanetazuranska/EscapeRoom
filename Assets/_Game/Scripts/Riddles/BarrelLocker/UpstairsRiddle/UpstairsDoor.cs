@@ -18,8 +18,6 @@ namespace ER.Riddle
 
         public override void OnClick(InteractionContext context)
         {
-            Cursor.lockState = CursorLockMode.None;
-
             OnClickEvent.Invoke();
 
             _cameraController = context.playerController.GetComponentInChildren<CameraController>();
