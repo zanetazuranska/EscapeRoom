@@ -95,7 +95,6 @@ namespace ER.Riddle.UI
             Suitcase suitcase = _networkObject.GetComponent<Suitcase>();
 
             suitcase.SetCameraTrue();
-            suitcase.isRiddleCorrect = true;
         }
 
         private void ChangeValueUp(int barrelId)
@@ -214,6 +213,9 @@ namespace ER.Riddle.UI
         private void OnAnswerCorrect()
         {
             SetDesactiveUI();
+
+            Suitcase suitcase = _networkObject.GetComponent<Suitcase>();
+            suitcase.isRiddleCorrect = true;
 
             _networkObject.gameObject.GetComponent<Suitcase>().OnClickEvent.RemoveListener(SetActiveUI);
             _exit.onClick.RemoveListener(SetDesactiveUI);

@@ -44,7 +44,7 @@ namespace ER.Riddle
         private IEnumerator DestroyGameObject(InteractionContext context)
         {
             StartCoroutine(context.interactionManager.ShowTextMessage(NEW_ITEM_TEXT));
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(2.0f);
             StopCoroutine(context.interactionManager.ShowTextMessage(NEW_ITEM_TEXT));
 
             Destroy(this.gameObject);
