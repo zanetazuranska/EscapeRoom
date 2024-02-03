@@ -7,6 +7,7 @@ namespace ER.Riddle
 {
     public class RiddleController : NetworkBehaviour
     {
+        [SerializeField] private int _id = 0;
         [SerializeField] private RiddleLogic _riddleLogic;
         [SerializeField] private bool _spawnNetworkObject = true;
         [SerializeField] private Transform _riddleActivateObj;
@@ -100,6 +101,11 @@ namespace ER.Riddle
         public Transform GetRiddleActiveGameObject()
         {
             return _riddleActivateObj;
+        }
+
+        public int GetId()
+        {
+            return _id;
         }
 
         public override void OnDestroy()

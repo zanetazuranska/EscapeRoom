@@ -3240,12 +3240,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4080044, y: 0.43248463, z: 0.5875264}
   m_Center: {x: -0.0015219003, y: 0.048222102, z: -2.2678082e-11}
---- !u!23 &245344516 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2300000, guid: e63b8c6b9fc029b4aa263a770e49bf72,
-    type: 3}
-  m_PrefabInstance: {fileID: 1307762197}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &251651153
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6147,6 +6141,81 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 441195538}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &455640581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 455640584}
+  - component: {fileID: 455640582}
+  - component: {fileID: 455640583}
+  m_Layer: 0
+  m_Name: SuitcaseRiddleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &455640582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455640581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3379463460
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &455640583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455640581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b1a5438f939dc4bab037b315e8f888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 2
+  _riddleLogic: {fileID: 11400000, guid: c01416ec55fa01d4995613377ba50629, type: 2}
+  _spawnNetworkObject: 0
+  _riddleActivateObj: {fileID: 1307762198}
+  OnObjectSpawn:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnswerCorrectEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &455640584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455640581}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &456403171
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11631,6 +11700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b1a5438f939dc4bab037b315e8f888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 0
   _riddleLogic: {fileID: 11400000, guid: 481ae1e7afdcc854c8bf99060f8b837c, type: 2}
   _spawnNetworkObject: 1
   _riddleActivateObj: {fileID: 1290177229}
@@ -16843,6 +16913,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1180131366}
+  - component: {fileID: 1180131367}
   m_Layer: 5
   m_Name: SuitcaseRiddle
   m_TagString: Untagged
@@ -16870,6 +16941,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1180131367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180131365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd66c1aa3dd7d47448c935598f579fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowUpButtons:
+  - {fileID: 848805060}
+  - {fileID: 1938577261}
+  - {fileID: 1994175328}
+  - {fileID: 419569625}
+  - {fileID: 197092433}
+  _arrowDownButtons:
+  - {fileID: 770610446}
+  - {fileID: 1855514424}
+  - {fileID: 1633800675}
+  - {fileID: 1405332748}
+  - {fileID: 1447024826}
+  _texts:
+  - {fileID: 1019783923}
+  - {fileID: 2102263172}
+  - {fileID: 1754568581}
+  - {fileID: 590227518}
+  - {fileID: 1381365865}
+  _ui: {fileID: 663187762}
+  _exit: {fileID: 1765926529}
 --- !u!1 &1182858029
 GameObject:
   m_ObjectHideFlags: 0
@@ -18446,11 +18549,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307762199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8161b4a85882d7d4f9ab8c21facabff2, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d4b56d271517f04c918a44a46a42555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemType: 4
-  _renderer: {fileID: 245344516}
+  OnClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1310144849
 GameObject:
   m_ObjectHideFlags: 0
@@ -33001,6 +33105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b1a5438f939dc4bab037b315e8f888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 1
   _riddleLogic: {fileID: 11400000, guid: f9ec3e898d0657d49b63f31e9a86e92f, type: 2}
   _spawnNetworkObject: 0
   _riddleActivateObj: {fileID: 0}
@@ -37791,4 +37896,5 @@ SceneRoots:
   - {fileID: 847161101}
   - {fileID: 1435629091}
   - {fileID: 1603905372}
+  - {fileID: 455640584}
   - {fileID: 1290177228}

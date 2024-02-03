@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using UnityEngine.Events;
 
 namespace ER.Riddle.UI
 {
-    public class UpstairsRiddleView : RiddleView
+    public class SuitcaseRiddleView : RiddleView
     {
         [SerializeField] private List<Button> _arrowUpButtons = new List<Button>();
         [SerializeField] private List<Button> _arrowDownButtons = new List<Button>();
@@ -25,16 +24,16 @@ namespace ER.Riddle.UI
 
         private void OnAddRiddleController(RiddleController riddleController)
         {
-            if(riddleController.GetERiddleType() == RiddleType.ERiddleType.BarrelLocker && riddleController.GetId() == 0)
+            if (riddleController.GetERiddleType() == RiddleType.ERiddleType.BarrelLocker && riddleController.GetId() == 2)
             {
                 EscapeRoomApp.Instance.GetAplicationFlowController().OnAddRiddleController.RemoveListener(OnAddRiddleController);
 
                 SetRiddleController(riddleController);
                 riddleController.OnObjectSpawn.AddListener(OnNetworkObjectSpawn);
 
-                for(int i = 0; i < riddleController.GetRiddleData().proposedAnswer.Count; i++)
+                for (int i = 0; i < riddleController.GetRiddleData().proposedAnswer.Count; i++)
                 {
-                    riddleController.GetRiddleData().proposedAnswer[i] = "0";
+                    riddleController.GetRiddleData().proposedAnswer[i] = "A";
                 }
 
                 SetButton();
@@ -47,9 +46,9 @@ namespace ER.Riddle.UI
         {
             if (GetRiddleController() == null)
             {
-                foreach (RiddleController riddleController in EscapeRoomApp.Instance.GetAplicationFlowController().GetRiddleControllers())
+                foreach(RiddleController riddleController in EscapeRoomApp.Instance.GetAplicationFlowController().GetRiddleControllers())
                 {
-                    if (riddleController.GetERiddleType() == RiddleType.ERiddleType.BarrelLocker && riddleController.GetId() == 0)
+                    if (riddleController.GetERiddleType() == RiddleType.ERiddleType.BarrelLocker && riddleController.GetId() == 2)
                     {
                         SetRiddleController(riddleController);
                     }
@@ -58,11 +57,11 @@ namespace ER.Riddle.UI
 
             if (transform == null)
             {
-                if(GameObject.FindFirstObjectByType<ER.Riddle.UpstairsDoor>() != null)
-                    transform = GameObject.FindFirstObjectByType<ER.Riddle.UpstairsDoor>().transform;
+                if (GameObject.FindFirstObjectByType<ER.Riddle.Suitcase>() != null)
+                    transform = GameObject.FindFirstObjectByType<ER.Riddle.Suitcase>().transform;
             }
 
-            transform.gameObject.GetComponent<UpstairsDoor>().OnClickEvent.AddListener(SetActiveUI);
+            transform.gameObject.GetComponent<Suitcase> ().OnClickEvent.AddListener(SetActiveUI);
 
             _networkObject = transform;
         }
@@ -73,11 +72,13 @@ namespace ER.Riddle.UI
             _arrowUpButtons[1].onClick.AddListener(ButtonUp1);
             _arrowUpButtons[2].onClick.AddListener(ButtonUp2);
             _arrowUpButtons[3].onClick.AddListener(ButtonUp3);
+            _arrowUpButtons[4].onClick.AddListener(ButtonUp4);
 
             _arrowDownButtons[0].onClick.AddListener(ButtonDown0);
             _arrowDownButtons[1].onClick.AddListener(ButtonDown1);
             _arrowDownButtons[2].onClick.AddListener(ButtonDown2);
             _arrowDownButtons[3].onClick.AddListener(ButtonDown3);
+            _arrowDownButtons[4].onClick.AddListener(ButtonDown4);
         }
 
         private void SetActiveUI()
@@ -91,7 +92,7 @@ namespace ER.Riddle.UI
             _ui.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
 
-            _networkObject.GetComponent<UpstairsDoor>().SetCameraTrue();
+            _networkObject.GetComponent<Suitcase>().SetCameraTrue();
         }
 
         private void ChangeValueUp(int barrelId)
@@ -109,9 +110,9 @@ namespace ER.Riddle.UI
             {
                 foreach (string value in data.Barrels[0].ValueSet)
                 {
-                    if(data.proposedAnswer[barrelId] == value)
+                    if (data.proposedAnswer[barrelId] == value)
                     {
-                        data.proposedAnswer[barrelId] = data.Barrels[0].ValueSet[i+1];
+                        data.proposedAnswer[barrelId] = data.Barrels[0].ValueSet[i + 1];
                         break;
                     }
 
@@ -121,7 +122,7 @@ namespace ER.Riddle.UI
 
             _texts[barrelId].text = data.proposedAnswer[barrelId];
 
-            if(GetRiddleController().IsAnswerCorrect(data))
+            if (GetRiddleController().IsAnswerCorrect(data))
             {
                 OnAnswerCorrect();
             }
@@ -180,6 +181,11 @@ namespace ER.Riddle.UI
             ChangeValueUp(3);
         }
 
+        private void ButtonUp4()
+        {
+            ChangeValueUp(4);
+        }
+
         private void ButtonDown0()
         {
             ChangeValueDown(0);
@@ -197,11 +203,16 @@ namespace ER.Riddle.UI
             ChangeValueDown(3);
         }
 
+        private void ButtonDown4()
+        {
+            ChangeValueDown(4);
+        }
+
         private void OnAnswerCorrect()
         {
             SetDesactiveUI();
 
-            _networkObject.gameObject.GetComponent<UpstairsDoor>().OnClickEvent.RemoveListener(SetActiveUI);
+            _networkObject.gameObject.GetComponent<Suitcase>().OnClickEvent.RemoveListener(SetActiveUI);
             _exit.onClick.RemoveListener(SetDesactiveUI);
             Destroy(this);
         }
@@ -212,11 +223,13 @@ namespace ER.Riddle.UI
             _arrowUpButtons[1].onClick.RemoveListener(ButtonUp1);
             _arrowUpButtons[2].onClick.RemoveListener(ButtonUp2);
             _arrowUpButtons[3].onClick.RemoveListener(ButtonUp3);
+            _arrowUpButtons[4].onClick.RemoveListener(ButtonUp4);
 
             _arrowDownButtons[0].onClick.RemoveListener(ButtonDown0);
             _arrowDownButtons[1].onClick.RemoveListener(ButtonDown1);
             _arrowDownButtons[2].onClick.RemoveListener(ButtonDown2);
             _arrowDownButtons[3].onClick.RemoveListener(ButtonDown3);
+            _arrowDownButtons[4].onClick.RemoveListener(ButtonDown4);
 
             EscapeRoomApp.Instance.GetAplicationFlowController().OnAddRiddleController.RemoveListener(OnAddRiddleController);
         }
