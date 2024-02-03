@@ -16,6 +16,11 @@ namespace ER
             Spoon = 6,
             Wire = 7,
             MagneticCard = 8,
+            Riddle2Paper1 = 9,
+            Riddle2Paper2 = 10,
+            Riddle2Paper3 = 11,
+            Riddle2Paper4 = 12,
+            Riddle2Paper5 = 13,
         }
 
         public ItemType itemType;
