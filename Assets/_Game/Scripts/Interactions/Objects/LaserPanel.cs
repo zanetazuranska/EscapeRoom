@@ -8,7 +8,7 @@ namespace ER
     public class LaserPanel : InteractableObject
     {
         private MeshRenderer _renderer;
-        private const string NO_KNOB = "The chest is empty";
+        private const string NO_KNOB = "The button is missing";
 
         private void Awake()
         {

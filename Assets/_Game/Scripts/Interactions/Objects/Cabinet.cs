@@ -28,10 +28,7 @@ namespace ER
 
         public override void OnHover()
         {
-            if (!_networkObject.GetIsOpen())
-            {
-                _renderer.materials[2].SetFloat("_Scale", 1.03f);
-            }
+            _renderer.materials[2].SetFloat("_Scale", 1.03f);
         }
 
         public override void OnUnHover()

@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public class CabinetNetworkObject : NetworkBehaviour
+public class LockerNetworkObject : NetworkBehaviour
 {
     [SerializeField] private Animator _animator;
     private const string ANIMATOR_BOOL = "CanOpen";
 
+    private NetworkVariable<bool> _isOpenN = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     [ServerRpc(RequireOwnership = false)]
-    private void StartAnimationServerRpc()
+    private void StartAnimationServerRpc(bool value)
     {
         StartAnimationClientRpc();
+        _isOpenN.Value = value;
     }
 
     [ClientRpc]
@@ -25,10 +29,16 @@ public class CabinetNetworkObject : NetworkBehaviour
         if (IsHost)
         {
             StartAnimationClientRpc();
+            _isOpenN.Value = value;
         }
         else
         {
-            StartAnimationServerRpc();
+            StartAnimationServerRpc(true);
         }
+    }
+
+    public bool GetIsOpen()
+    {
+        return _isOpenN.Value;
     }
 }

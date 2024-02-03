@@ -8,12 +8,8 @@ namespace ER.Riddle
     public class RiddleController : NetworkBehaviour
     {
         [SerializeField] private RiddleLogic _riddleLogic;
-        //[SerializeField] private Transform _riddleActivateObjPrefab;
         [SerializeField] private bool _spawnNetworkObject = true;
-        //[SerializeField] private GameObject _networkObjectParent;
         [SerializeField] private Transform _riddleActivateObj;
-
-        [SerializeField] private string tag;
 
         public UnityEvent<Transform> OnObjectSpawn = new UnityEvent<Transform>();
         public UnityEvent OnAnswerCorrectEvent = new UnityEvent();
@@ -32,26 +28,13 @@ namespace ER.Riddle
         private void OnHostSpawned()
         {
             EscapeRoomApp.Instance.OnHostSpawned.RemoveListener(OnHostSpawned);
-
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
-
-            //if(_spawnNetworkObject)
-           // {
-                //_riddleActivateObj = Instantiate(_riddleActivateObjPrefab);
-                //_riddleActivateObj.GetComponent<NetworkObject>().Spawn(true);
-                //_riddleActivateObj.GetComponent<NetworkObject>().TrySetParent(this.transform);
-           // }
-            //else
-            //{
-                //_riddleActivateObj = _riddleActivateObjPrefab;
-            //}
 
             OnObjectSpawn.Invoke(_riddleActivateObj);
         }
 
         private void OnClientSpawned()
         {
-            Debug.Log("Client");
             EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 
@@ -87,8 +70,6 @@ namespace ER.Riddle
         {
             GetRiddleLogic().OnRiddleCorrect();
 
-            //RiddleCorrectServerRpc();
-
             if(IsHost)
             {
                 DestroyDoorClientRpc();
@@ -104,12 +85,6 @@ namespace ER.Riddle
         [ServerRpc(RequireOwnership = false)]
         private void RiddleCorrectServerRpc()
         {
-            //if(_spawnNetworkObject)
-            //{
-            //    _riddleActivateObj.GetComponent<NetworkObject>().Despawn();
-            //    Destroy(_riddleActivateObj.gameObject);
-            //}
-
             DestroyDoorClientRpc();
         }
 
