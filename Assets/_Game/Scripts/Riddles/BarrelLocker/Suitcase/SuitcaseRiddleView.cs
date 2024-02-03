@@ -92,7 +92,10 @@ namespace ER.Riddle.UI
             _ui.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
 
-            _networkObject.GetComponent<Suitcase>().SetCameraTrue();
+            Suitcase suitcase = _networkObject.GetComponent<Suitcase>();
+
+            suitcase.SetCameraTrue();
+            suitcase.isRiddleCorrect = true;
         }
 
         private void ChangeValueUp(int barrelId)

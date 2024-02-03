@@ -14,6 +14,10 @@ namespace ER.Riddle
 
         private CameraController _cameraController;
 
+        public bool isRiddleCorrect = false;
+
+        private const string NEW_ITEM_TEXT = "Added new item";
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -21,11 +25,29 @@ namespace ER.Riddle
 
         public override void OnClick(InteractionContext context)
         {
-            OnClickEvent.Invoke();
+            if(!isRiddleCorrect)
+            {
+                OnClickEvent.Invoke();
 
-            _cameraController = context.playerController.GetComponentInChildren<CameraController>();
+                _cameraController = context.playerController.GetComponentInChildren<CameraController>();
 
-            _cameraController.canMoveCamera = false;
+                _cameraController.canMoveCamera = false;
+            }
+            else
+            {
+                context.playerController.GetInventory().Add(Item.ItemType.Button);
+
+                StartCoroutine(DestroyGameObject(context));
+            }
+        }
+
+        private IEnumerator DestroyGameObject(InteractionContext context)
+        {
+            StartCoroutine(context.interactionManager.ShowTextMessage(NEW_ITEM_TEXT));
+            yield return new WaitForSeconds(1.0f);
+            StopCoroutine(context.interactionManager.ShowTextMessage(NEW_ITEM_TEXT));
+
+            Destroy(this.gameObject);
         }
 
         public override void OnHover()

@@ -10,6 +10,8 @@ namespace ER
         private MeshRenderer _renderer;
         private const string NO_KNOB = "The button is missing";
 
+        [SerializeField] private LaserPanelNetworkObject _laserPanelNetworkObject;
+
         private void Awake()
         {
             _renderer = GetComponent<MeshRenderer>();
@@ -17,7 +19,17 @@ namespace ER
 
         public override void OnClick(InteractionContext context)
         {
-            StartCoroutine(context.interactionManager.ShowTextMessage(NO_KNOB));
+            List<Item> items = context.playerController.GetInventory().GetItems();
+            Item button = ItemRegister.Instance.GetItem(Item.ItemType.Button);
+
+            if(items.Contains(button))
+            {
+                _laserPanelNetworkObject.SwitchButtons();
+            }
+            else
+            {
+                StartCoroutine(context.interactionManager.ShowTextMessage(NO_KNOB));
+            }
         }
 
         public override void OnHover()
