@@ -51,12 +51,12 @@ namespace ER.Riddle
 
         private void OnClientSpawned()
         {
+            Debug.Log("Client");
+
             if(_riddleActivateObj == null)
             {
                 _riddleActivateObj = GameObject.FindGameObjectWithTag(tag).transform;
             }
-
-            EscapeRoomApp.Instance.OnClientSpawned.RemoveListener(OnClientSpawned);
 
             EscapeRoomApp.Instance.GetAplicationFlowController().AddRiddleController(this);
 

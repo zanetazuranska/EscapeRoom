@@ -3,29 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserPanel : InteractableObject
+namespace ER
 {
-    private MeshRenderer _renderer;
-    private const string NO_KNOB = "The chest is empty";
-
-    private void Awake()
+    public class LaserPanel : InteractableObject
     {
-        _renderer = GetComponent<MeshRenderer>();
-    }
+        private MeshRenderer _renderer;
+        private const string NO_KNOB = "The chest is empty";
 
-    public override void OnClick(InteractionContext context)
-    {
-        StartCoroutine(context.interactionManager.ShowTextMessage(NO_KNOB));
-    }
+        private void Awake()
+        {
+            _renderer = GetComponent<MeshRenderer>();
+        }
 
-    public override void OnHover()
-    {
-        _renderer.materials[1].SetFloat("_Scale", 1.03f);
-    }
+        public override void OnClick(InteractionContext context)
+        {
+            StartCoroutine(context.interactionManager.ShowTextMessage(NO_KNOB));
+        }
 
-    public override void OnUnHover()
-    {
-        _renderer.materials[1].SetFloat("_Scale", 0f);
-    }
+        public override void OnHover()
+        {
+            _renderer.materials[1].SetFloat("_Scale", 1.03f);
+        }
 
+        public override void OnUnHover()
+        {
+            _renderer.materials[1].SetFloat("_Scale", 0f);
+        }
+    }
 }
+
+

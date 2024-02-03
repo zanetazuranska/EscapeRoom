@@ -47,8 +47,6 @@ namespace ER
 
             if(IsHost)
             {
-                Debug.Log("Host");
-
                 _faceHost.SetActive(true);
 
                 EscapeRoomApp.Instance.OnHostSpawned.Invoke();
@@ -56,8 +54,6 @@ namespace ER
 
             if (IsClient && !IsHost)
             {
-                Debug.Log("Client");
-
                 _faceClient.SetActive(true);
 
                 EscapeRoomApp.Instance.OnClientSpawned.Invoke();

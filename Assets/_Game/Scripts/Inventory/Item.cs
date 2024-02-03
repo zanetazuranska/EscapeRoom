@@ -21,6 +21,7 @@ namespace ER
             Riddle2Paper3 = 11,
             Riddle2Paper4 = 12,
             Riddle2Paper5 = 13,
+            RackKey = 14,
         }
 
         public ItemType itemType;
