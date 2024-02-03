@@ -60,7 +60,7 @@ namespace ER
 
         public void ResetCamera()
         {
-            _camera.transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+            _camera.transform.eulerAngles = new Vector3(0.0f, -90.0f, 0.0f);
         }
     }
 
