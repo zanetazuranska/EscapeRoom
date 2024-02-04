@@ -256,6 +256,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Message",
+            "id": "ffcc7c9e-6d88-45d5-a541-7e46e4a0d8b2",
+            "actions": [
+                {
+                    "name": "Active",
+                    "type": "Button",
+                    "id": "c67cfc67-4f93-414e-a0c8-42f3daeb8f14",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Send",
+                    "type": "Button",
+                    "id": "10a7c93a-e23d-425b-af50-9df476dbcd9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "03cfe94c-8358-4998-81dd-6c37ed037003",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Active",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6334a9fe-272a-4059-aa40-da827ecb2f89",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Send",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

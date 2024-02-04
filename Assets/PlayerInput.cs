@@ -278,6 +278,54 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Message"",
+            ""id"": ""ffcc7c9e-6d88-45d5-a541-7e46e4a0d8b2"",
+            ""actions"": [
+                {
+                    ""name"": ""Active"",
+                    ""type"": ""Button"",
+                    ""id"": ""c67cfc67-4f93-414e-a0c8-42f3daeb8f14"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Send"",
+                    ""type"": ""Button"",
+                    ""id"": ""10a7c93a-e23d-425b-af50-9df476dbcd9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""03cfe94c-8358-4998-81dd-6c37ed037003"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Active"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6334a9fe-272a-4059-aa40-da827ecb2f89"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Send"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -293,6 +341,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Inventory
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_ActiveDesactiv = m_Inventory.FindAction("Active/Desactiv", throwIfNotFound: true);
+        // Message
+        m_Message = asset.FindActionMap("Message", throwIfNotFound: true);
+        m_Message_Active = m_Message.FindAction("Active", throwIfNotFound: true);
+        m_Message_Send = m_Message.FindAction("Send", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -504,6 +556,60 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public InventoryActions @Inventory => new InventoryActions(this);
+
+    // Message
+    private readonly InputActionMap m_Message;
+    private List<IMessageActions> m_MessageActionsCallbackInterfaces = new List<IMessageActions>();
+    private readonly InputAction m_Message_Active;
+    private readonly InputAction m_Message_Send;
+    public struct MessageActions
+    {
+        private @PlayerInput m_Wrapper;
+        public MessageActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Active => m_Wrapper.m_Message_Active;
+        public InputAction @Send => m_Wrapper.m_Message_Send;
+        public InputActionMap Get() { return m_Wrapper.m_Message; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MessageActions set) { return set.Get(); }
+        public void AddCallbacks(IMessageActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MessageActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MessageActionsCallbackInterfaces.Add(instance);
+            @Active.started += instance.OnActive;
+            @Active.performed += instance.OnActive;
+            @Active.canceled += instance.OnActive;
+            @Send.started += instance.OnSend;
+            @Send.performed += instance.OnSend;
+            @Send.canceled += instance.OnSend;
+        }
+
+        private void UnregisterCallbacks(IMessageActions instance)
+        {
+            @Active.started -= instance.OnActive;
+            @Active.performed -= instance.OnActive;
+            @Active.canceled -= instance.OnActive;
+            @Send.started -= instance.OnSend;
+            @Send.performed -= instance.OnSend;
+            @Send.canceled -= instance.OnSend;
+        }
+
+        public void RemoveCallbacks(IMessageActions instance)
+        {
+            if (m_Wrapper.m_MessageActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMessageActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MessageActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MessageActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MessageActions @Message => new MessageActions(this);
     public interface ICameraControllerActions
     {
         void OnMouseX(InputAction.CallbackContext context);
@@ -517,5 +623,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IInventoryActions
     {
         void OnActiveDesactiv(InputAction.CallbackContext context);
+    }
+    public interface IMessageActions
+    {
+        void OnActive(InputAction.CallbackContext context);
+        void OnSend(InputAction.CallbackContext context);
     }
 }
